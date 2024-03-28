@@ -11,7 +11,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content" style={{backgroundColor:"#020412", width:"25%"}}>
         <span className="close" onClick={onClose}>&times;</span>
         {children}
       </div>

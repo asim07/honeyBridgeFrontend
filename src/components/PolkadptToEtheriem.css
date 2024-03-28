@@ -26,12 +26,6 @@
     font-size: 20px;
     padding-left: 20px;
 }
-.Address::placeholder{
-    /* padding-left: 10px; */
-}
-.Amount{
-    /* margin-top: 50px; */
-}
 .close {
     position: absolute;
     top: 10px;
