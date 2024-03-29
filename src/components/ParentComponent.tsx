@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './modalCss.css';
 
 interface ParentComponentProps {
     submit: (amount: any, address: any) => void; // Updated to accept two parameters
     setIsModalOpen: (isOpen: boolean) => void;
     isModalOpen: boolean;
-    isPending: boolean
+    isPending: boolean;
+    isConnected: boolean;
 }
 
-const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, setIsModalOpen, isPending }) => {
+const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, setIsModalOpen, isPending, isConnected }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
@@ -29,7 +31,11 @@ const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, 
     return (
         <div>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <h3>Enter Address</h3>
+            
+            {!isConnected && <div className='d-flex align-items-center justify-content-center'  style={{width:"100%", height:"100%"}}><ConnectButton /></div> }
+            {isConnected && <div><ConnectButton /></div> }
+                {isConnected && <>
+                                <h3 style={{marginTop:"20px"}}>Enter Address</h3>
                 <input
                     type="text"
                     className='Address'
@@ -51,7 +57,10 @@ const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, 
         <span>Submit</span>
         <div className="loader"></div>
       </button>
-                </div>
+      </div>
+      
+      </>}
+
             </Modal>
         </div>
     );

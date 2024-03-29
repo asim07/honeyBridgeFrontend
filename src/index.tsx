@@ -1,4 +1,5 @@
 import '@rainbow-me/rainbowkit/styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // import './polyfills';
 // import './index.css';
 import React from 'react';

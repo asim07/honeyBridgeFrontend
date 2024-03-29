@@ -34,6 +34,7 @@ function Layout (): React.ReactElement<null> {
   }, [setTheme, theme]);
 
   return (<div className={'main-layout '}>
+    
     <div className={`main-content ${theme === 'dark' ? '-dark' : '-light'}`}>
       {/* <Switch
         checkedChildren='Light'

@@ -38,16 +38,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectWallet,openModal }) => {
         </Toolbar>
         <ListItemButton
         onClick={openModal}
-        // component={Link}
-        // to={item.path}
-        // sx={{
-        //   "&: hover": {
-        //     backgroundColor: colorConfigs.sidebar.hoverBg
-        //   },
-        //   backgroundColor: appState === item.state ? colorConfigs.sidebar.activeBg : "unset",
-        //   paddingY: "12px",
-        //   paddingX: "24px"
-        // }}
       >
         <ListItemIcon sx={{
           color: colorConfigs.sidebar.color
@@ -58,16 +48,6 @@ const Sidebar: React.FC<SidebarProps> = ({ selectWallet,openModal }) => {
       </ListItemButton>
       <ListItemButton
       onClick={selectWallet.open}
-        // component={Link}
-        // to={item.path}
-        // sx={{
-        //   "&: hover": {
-        //     backgroundColor: colorConfigs.sidebar.hoverBg
-        //   },
-        //   backgroundColor: appState === item.state ? colorConfigs.sidebar.activeBg : "unset",
-        //   paddingY: "12px",
-        //   paddingX: "24px"
-        // }}
       >
         <ListItemIcon sx={{
           color: colorConfigs.sidebar.color

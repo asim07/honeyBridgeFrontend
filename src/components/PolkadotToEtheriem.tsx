@@ -6,7 +6,8 @@ interface ParentComponentProps {
     submit: (amount: any, address: any) => void; // Updated to accept two parameters
     setIsModalOpen: (isOpen: boolean) => void;
     isModalOpen: boolean;
-    isPending: boolean
+    isPending: boolean;
+    isConnected: boolean;
 }
 
 const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, setIsModalOpen, isPending }) => {
