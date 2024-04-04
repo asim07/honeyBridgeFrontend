@@ -233,6 +233,7 @@ const App = () => {
         </div>
         </div>
         </div>
+        
         {/* <ConnectButton label="Connect Wallet" className="connectButton" /> */}
 
         <button style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={openModal}>Connect Wallet</button>
