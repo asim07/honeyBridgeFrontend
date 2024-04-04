@@ -1,0 +1,222 @@
+<Navbar className="bg-body-tertiary navbarResp w-100 d-none">
+<Container fluid>
+  <Navbar.Brand href="#home" className="brand">React-Bootstrap</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav>
+      <Nav.Link href="#deets">       
+      <ListItemButton
+      className="itemsss"
+      onClick={openModal}
+    >
+      <ListItemIcon sx={{
+        color: colorConfigs.sidebar.color,
+      }}>
+      <Avatar src={assets.images.eth}  style={{width:"20px", height:"20px", marginLeft:"20px"}} />
+      </ListItemIcon>
+      {'ETHEREUM TO POLKADOT'}
+    </ListItemButton></Nav.Link>
+      <Nav.Link eventKey={2} href="#memes">
+      <ListItemButton
+      className="itemsss"
+      onClick={selectWallet.open}
+    >
+      <ListItemIcon sx={{
+        color: colorConfigs.sidebar.color
+      }}>
+      <Avatar src={assets.images.polkadot} style={{width:"20px", height:"20px", marginLeft:"20px"}} />
+      </ListItemIcon>
+      {'POLKADOT TO ETHEREUM'}
+    </ListItemButton>
+      </Nav.Link>
+    </Nav>
+  </Navbar.Collapse>
+</Container>
+</Navbar>
+
+  <Box sx={{ display: "flex", flexDirection: "column" }}>
+  {/* <Topbar /> */}
+  <Box
+      component="nav"
+      className="resp"
+      sx={{
+          width: "100%", // Adjusted for mobile
+          flexShrink: 0
+      }}
+  >
+      <Sidebar selectWallet={selectWallet} openModal={openModal} />
+  </Box>
+  <Box
+      component="main"
+      sx={{
+          flexGrow: 1,
+          p: 3,
+          width: "100%", // Adjusted for mobile
+          minHeight: "100vh",
+          textAlign: "center", // Moved to the main box
+          h1: {
+              fontSize: "2rem" // Adjusted font size for mobile
+          }
+      }}
+  >
+      <div className='sideContent'>
+          <h1>ABOUT</h1>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat repellendus in optio nisi eos tempore non. Suscipit rerum, aut voluptatum perspiciatis temporibus at nobis quidem fuga officia, nulla odio. Reprehenderit.</p>
+      </div>
+  </Box>
+  </Box>
+
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: 12,
+    }}
+  >
+    {/* <PolkadotToEtheriem isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpens} setIsModalOpen={setIsModalOpens} />       */}
+    <ParentComponent isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />      
+    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>ETHERIUM TO POLKADOT</button> */}
+    {/* <button
+     style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px", fontSize:"14px", marginLeft:"20px"}}
+      // onClick={selectWallet.open}
+    >Select Wallet</button> */}
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <Navbar expand="lg" style={{backgroundColor: "rgba(0,0,0,0.0)", color:"white", borderBottom:"1px solid #2f3645"}}>
+      <Container>
+        <Navbar.Brand href="#" style={{color:"white", fontWeight:"900"}}>
+          <img src={assets.images.polkadot} style={{width:"25px", marginRight:"10px"}}></img>
+          layer3</Navbar.Brand>
+        <Navbar.Toggle style={{backgroundColor:"white"}} aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
+          </Nav>
+            <Button style={{backgroundColor:"#fcff6b", borderRight:"2px solid #dac400", borderBottom:"2px solid #dac400"}}>Search</Button>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+
+    <Tooltip id="my-tooltip" />
+    <div style={{margin:"15% 38%"}}>
+      <div className="mainHeading">
+        <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p>
+        <div className="d-flex align-items-center mb-3">
+          <div style={{backgroundColor:"#fdff0f", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>
+          <a data-tooltip-id="my-tooltip" data-tooltip-content="0xjhk1098jajqyuqqqiohh882182hkajhkl4933">
+            <p className="m-0">0xjhk1098jaj...4933</p>
+          </a>          
+        </div>
+        {
+          selectedChains.map(item=>(
+            <div className="content">
+            <div className="innerHeadingLeft" style={{backgroundColor:"#222938", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
+              <img src={item.logo} style={{width:"40px"}}></img>
+              <div>
+                <p className="m-0 froms">From</p>
+                <div className="d-flex drops dropdown" onClick={handleShow}>
+                  <p className="m-0">{item.name}</p>
+                  <img src={assets.images.arrow} style={{width:"20px"}}></img>
+                </div>
+              </div>
+            </div>
+            <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
+              <input type="number" className="Inputs" placeholder="0"></input>          
+              <div className="d-flex align-items-center">
+                <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
+                <p className="m-0">HONEY</p>
+              </div>
+            </div>
+            </div>
+          ))
+        }
+        <img className="chnage" src={assets.images.downarrow} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
+        <div className="content">
+        <div className="innerHeadingLeft" style={{backgroundColor:"#222938", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
+          <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img>
+          <div>
+            <p className="m-0 froms">To</p>
+            <div className="d-flex drops">
+              <p className="m-0">{nonSelectedChains[0].name}</p>
+              {/* <img src={assets.images.arrow} style={{width:"20px"}}></img> */}
+            </div>
+          </div>
+        </div>
+        <div className="innerHeadingLeft d-block" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
+        <input type="text" className="Inputs w-100" placeholder="Address"></input>          
+        <div className=" d-flex justify-content-between">
+        <input type="number" className="Inputs" placeholder="0" disabled></input>          
+          <div className="d-flex align-items-center">
+            <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
+            <p className="m-0">HONEY</p>
+          </div>
+        </div>
+        </div>
+        </div>
+        <button style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={openModal}>Connect Wallet</button>
+
+      </div>
+    </div>
+    <MyModal
+        show={showModal}
+        onHide={handleClose}
+        onConfirm={handleConfirm}
+        title="Select chain"
+        content={chains}
+        setChain={setChain}
+        setShowModal={setShowModal}
+    />
+    {
+    false &&
+    <ParentComponent isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    }
+    
+    {/* <SelectWalletModal theme={'dark'} /> */}
+
+    </>

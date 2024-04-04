@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import './modalCss.css';
 
 interface ParentComponentProps {
     submit: (amount: any, address: any) => void; // Updated to accept two parameters
@@ -27,13 +26,15 @@ const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(event.target.value);
     };
-
+    console.log({isModalOpen})
     return (
         <div>
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            {
+                isModalOpen &&
+            <>
             
-            {!isConnected && <div className='d-flex align-items-center justify-content-center'  style={{width:"100%", height:"100%"}}><ConnectButton /></div> }
-            {isConnected && <div><ConnectButton /></div> }
+            {!isConnected && <div className='d-flex align-items-center justify-content-center'  style={{width:"100%", height:"100%"}}><ConnectButton label="HELLO" /></div> }
+            {isConnected && <div><ConnectButton label="HELLO" /></div> }
                 {isConnected && <>
                                 <h3 style={{marginTop:"20px"}}>Enter Address</h3>
                 <input
@@ -61,7 +62,8 @@ const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, 
       
       </>}
 
-            </Modal>
+            </>
+            }
         </div>
     );
 };

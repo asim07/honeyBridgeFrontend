@@ -5,6 +5,50 @@
 .itemsss{
     font-size: 7px;
 }
+.content{
+    margin-top: 5px;
+}
+.dropdown:hover{
+    background-color: #2a354c !important;    
+    cursor: pointer;
+}
+.connectButton{
+    background-color:"#fcff6b";
+    width:100%; 
+    border-right:2px solid #dac400; 
+    border-bottom:4px solid #dac400; 
+    padding:10px 0px;
+    font-size:20px;
+    border-radius:10px
+}
+.innerHeadingLeft{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    border-bottom: 1px solid #2f3645 !important;
+}
+.froms{
+    color: #a9acb4;
+    font-size: 14px;
+    margin-left:10px !important ;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.Inputs{
+    background-color: transparent;
+    height:40px;
+    width:60%;
+    outline: 0;
+    border: 0;
+    font-size: 30px;
+    color:white;    
+}
+.drops{
+    margin-left:10px !important;
+}
 @media only screen and (max-width: 700px) and (min-width: 200px) {
     .navbarResp{
         display: flex !important;

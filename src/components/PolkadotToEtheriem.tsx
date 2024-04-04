@@ -10,7 +10,7 @@ interface ParentComponentProps {
     isConnected: boolean;
 }
 
-const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, setIsModalOpen, isPending }) => {
+const ParentComponent: React.FC<ParentComponentProps> = ({ submit, isModalOpen, setIsModalOpen, isPending, isConnected }) => {
     const closeModal = () => {
         setIsModalOpen(false);
     };

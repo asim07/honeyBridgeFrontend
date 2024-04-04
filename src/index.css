@@ -1,4 +1,8 @@
 body {
-  background-color: #212440 !important;
+  background-color: #141925 !important;
   color: white !important;
+}
+.chnage:hover{
+  background-color: #2a354c !important;
+  cursor: pointer;
 }

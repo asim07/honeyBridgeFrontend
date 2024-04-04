@@ -1,0 +1,54 @@
+/* chainDropdown.css */
+
+.modal-content {
+    background-color: #222938; /* Green background */
+    width:200%;
+    color: #fff; /* Text color */
+    top: 50%; /* Center modal vertically */
+    left: 50%; /* Center modal horizontally */
+    transform: translate(-77%, -50%); /* Adjust position */
+  }
+  
+  .modal-dialog {
+    margin: 0; /* Reset margin */
+    position: absolute;
+    top: 50%; /* Center modal vertically */
+    left: 50%; /* Center modal horizontally */
+    transform: translate(-77%, -50%); /* Adjust position */
+  }
+  
+  .modal-header {
+    border-bottom: none; /* Remove border from header */
+  }
+  
+  .modal-footer {
+    border-top: none; /* Remove border from footer */
+  }
+  
+  /* Close button style */
+  .btn-close {
+    color: #fff !important; /* Close button text color */
+    background-color: white;
+  }
+  .selected{
+    background-color: #3f485a;
+    /* padding: 10px; */
+    border-radius: 10px;
+  }
+  .unders:hover{
+    cursor: pointer;
+  }
+  .nonselected{
+    border-radius: 10px;
+  }
+  /* Save button style */
+  .btn-primary {
+    background-color: #007bff; /* Blue background for Save Changes button */
+    border-color: #007bff; /* Blue border color */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue background on hover */
+    border-color: #0056b3; /* Darker blue border color on hover */
+  }
+  
