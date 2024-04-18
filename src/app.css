@@ -8,6 +8,7 @@
 .content{
     margin-top: 5px;
 }
+
 .dropdown:hover{
     background-color: #2a354c !important;    
     cursor: pointer;
