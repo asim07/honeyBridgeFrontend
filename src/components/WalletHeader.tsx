@@ -62,12 +62,7 @@ function WalletHeader ({ visible }: Props): React.ReactElement<Props> {
           onClick={selectWallet.open}
           type={'primary'}
         >Select Wallet</Button>
-        <Button
-          style={{marginLeft:"20px"}}
-          className='sub-wallet-btn sub-wallet-btn-small-size'
-          onClick={disconnect.bind(null, {wallet, extension:'substrate'})}
-          type={'primary'}
-        >DIsconnect</Button>
+
       </div>
     </div>
   </header>);

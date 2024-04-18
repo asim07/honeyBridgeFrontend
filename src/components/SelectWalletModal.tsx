@@ -25,11 +25,11 @@ function SelectWalletModal ({ theme }: Props): React.ReactElement<Props> {
       if (walletType === 'substrate') {
         walletContext.setWallet(getWalletBySource(walletKey), walletType);
         openSelectWalletContext.close();
-        navigate('/wallet-info');
+        // navigate('/wallet-info');
       } else {
         walletContext.setWallet(getEvmWalletBySource(walletKey), walletType);
         openSelectWalletContext.close();
-        navigate('/evm-wallet-info');
+        // navigate('/evm-wallet-info');
       }
     },
     [navigate, openSelectWalletContext, walletContext]

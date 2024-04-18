@@ -19,7 +19,7 @@ import './app.css';
 import { ethers } from 'ethers';
 import ParentComponent from './components/ParentComponent';
 import PolkadotToEtheriem from './components/PolkadotToEtheriem';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-notifications-component/dist/theme.css'
@@ -28,20 +28,110 @@ import {useNavigate} from 'react-router-dom';
 import React from 'react';
 import SelectWalletModal from './components/SelectWalletModal'
 import {OpenSelectWallet, WalletContext} from './contexts';
+import { ApiPromise, WsProvider, SubmittableResult } from '@polkadot/api'
 const App = () => {
-
+  const [amount, setAmount] = useState('');
+  const [addresss, setAddress] = useState('');  
   const selectWallet = useContext(OpenSelectWallet);
   const walletContext = useContext(WalletContext);
   const navigate = useNavigate();
+  const [loaderButton, setloaderButton] = useState(false);
+  const [clickedButton, setclickedButton] = useState(false);
+  let api: ApiPromise;
+  const sendTransaction = async(data)=>{
 
+
+    console.log(amount , addresss);
+    if(!amount.length || !addresss.length){
+      console.log('HWW');
+      toast("Address or amount cannot be empty");
+    }else{
+      setclickedButton(true);
+      setloaderButton(true);
+      const provider = new WsProvider('wss://www.devnests.com/blockchain/')
+      api = await ApiPromise.create({ provider });
+      console.log({api});
+      console.log({apia:api})
+      // '0x08378D177abD7d8b2EFF37c24E84622118974933'
+      const tx = api.tx.recieverModule.transferToTreasury(Number(`${amount}000000000000`), addresss);
+      await tx.signAndSend(data.address, { signer: data.signer }, ({ status }) => {
+        console.log({status});
+        if (status.isInBlock) {
+            console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+        } else {
+              let toastId;
+              if(status.type === 'Ready'){
+                toast('Ready');
+              }
+              if(status.type === 'Broadcast'){
+                toastId = toast("Transaction is in progress", {
+                  autoClose: false,
+                });
+              }
+              if(status.type === 'Finalized'){
+                 // Close the toast after a delay (e.g., 5 seconds)
+                toast.dismiss(toastId);
+                toast('Transaction Finalized...');
+                setclickedButton(false);
+                setloaderButton(false);
+              }
+            console.log(`Current status: ${status.type}`);
+        }
+   
+  }).catch((error: any) => {
+      console.log(':( transaction failed', error);
+  });
+  }
+}
+  async function connectToChain(provider) {
+    // console.log('INNER')
+    // try{
+    //   const provider = new WsProvider('wss://www.devnests.com/blockchain/')
+    //   api = await ApiPromise.create({ provider });
+    //   console.log({api});
+    // }catch(err){
+    //   console.log({err})
+    // }
+  }
+  useEffect(() => {
+    if (walletContext.accounts && walletContext.accounts.length > 0 && walletContext.accounts[walletContext.accounts.length-1].address) {
+      connectToChain(walletContext.wallet?.provider);
+    }
+  }, [walletContext.wallet?.provider, walletContext.accounts[walletContext.accounts.length-1]?.address, walletContext.wallet?.signer]);
+  let [connectedToPolkadot,setConnected]= useState(false);
   useEffect(() => {
     if (walletContext.wallet && walletContext.walletType === 'substrate') {
-      navigate('/wallet-info');
+      setConnected(true);
     } else if (walletContext.evmWallet && walletContext.walletType === 'evm') {
       navigate('/evm-wallet-info');
     }
-  }, [navigate, walletContext]);
-  const {address, isConnected} = useAccount()
+  }, [walletContext]);
+  const {address, isConnected} = useAccount();
+  const setAddressToChain = (address,chainName) => {
+    setChain(() => {
+      return chains.map(item => {
+        if (item.name === chainName) {
+          return {
+            ...item,
+            address: address // Set the address for Polkadot
+          };
+        }
+        return {
+          ...item,
+        };
+      });
+    });
+  }
+
+  const connectButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleButtonClick = () => {
+    // Check if the ConnectButton ref is available
+    if (connectButtonRef.current) {
+      // Trigger the click event of the ConnectButton
+      connectButtonRef.current.click();
+    }
+  };
   console.log({isConnected});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => {
@@ -115,14 +205,17 @@ const App = () => {
   console.log({isPending}); 
   let CustomIsPending = isPending || isConfirming
 
-  const submit = (amount: string, address: string) => {
-    if(amount.length && address.length){
+  const submit = (obj: any) => {
+    console.log(obj.amount , obj.addresss);
+    if(obj.amount.length && obj.addresss.length){
       writeContract({
         address: contractAddress,
         abi,
         functionName: 'transferToPolkadot',
-        args: [ethers.parseUnits(amount, 12), address],
+        args: [ethers.parseUnits(obj.amount, 12), obj.addresss],
       });
+    }else{
+      toast('Address or anount must not be empty!');
     }
   };
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -131,8 +224,9 @@ const App = () => {
     setSidebarOpen(open);
   };
   const [showModal, setShowModal] = useState(false);
-  const [chains, setChain] = useState([{name:"Etheriem", logo:assets.images.eth, selected:false, tick:assets.images.tick},{name:"Polkadot", logo:assets.images.polkadot, selected:true, tick:assets.images.tick}])
+  const [chains, setChain] = useState([{name:"Etheriem", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Polkadot", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
   const selectedChains = chains.filter(chain => chain.selected);
+  console.log({selectedChains});
   const nonSelectedChains = chains.filter(chain => !chain.selected);
   const opposie = ()=>{
     setChain(() => {
@@ -142,13 +236,59 @@ const App = () => {
       }));
     });
   }
+  useEffect(() => {
+    if (address) {
+      console.log({address});
+      setAddressToChain(address,'Etheriem')
+    }
+  }, [address]);
+  useEffect(() => {
+    if (!isConnected) {
+      // console.log({address});
+      setAddressToChain('','Etheriem')
+    }
+  }, [!isConnected]);
+  useEffect(() => {
+    if (walletContext.accounts[walletContext.accounts.length-1]?.address) {
+      setAddressToChain(walletContext.accounts[walletContext.accounts.length-1]?.address,'Polkadot')
+    }
+  }, [walletContext.accounts[walletContext.accounts.length-1]?.address]);
+  const shortenAddress = (address) => {
+    if (address.length <= 10) return address; // Return full address if it's already short
+  
+    const firstPart = address.substring(0, 8);
+    const lastPart = address.substring(address.length - 8);
+  
+    return `${firstPart}.....${lastPart}`;
+  }
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
   const handleConfirm = () => {
     // Handle confirm action
     handleClose();
   };
-  
+  const disconnect = () => {
+    localStorage.clear();
+    console.log('localStorage cleared!');
+    
+    if ((walletContext as any).setAccounts) {
+      (walletContext as any).setAccounts([]);
+      // (walletContext as any).setWalletType('');
+      // (walletContext as any).setWalletKey('');
+    }
+    if ((walletContext as any).setWallet) {
+      (walletContext as any).setWallet('ajja','aa',true);
+      // (walletContext as any).setWalletType('');
+      // (walletContext as any).setWalletKey('');
+    }
+    
+  };
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value);
+  };
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(event.target.value);
+  };
   return (
     <>
     <div className="modal">
@@ -172,20 +312,134 @@ const App = () => {
             navbarScroll
           >
           </Nav>
-            <Button style={{backgroundColor:"#fcff6b", borderRight:"2px solid #dac400", borderBottom:"2px solid #dac400"}}>Connect Wallet</Button>
+          {
+  selectedChains[0]['name'] === 'Polkadot' ?
+  !walletContext.wallet &&   <Button style={{backgroundColor:"#fcff6b", borderRight:"2px solid #dac400", borderBottom:"2px solid #dac400"}} onClick={selectWallet.open}>Connect Wallet</Button>
+            :
+            <ConnectButton.Custom>
+  {({
+    account,
+    chain,
+    openAccountModal,
+    openChainModal,
+    openConnectModal,
+    authenticationStatus,
+    mounted,
+  }) => {
+    // Note: If your app doesn't use authentication, you
+    // can remove all 'authenticationStatus' checks
+    
+    const ready = mounted && authenticationStatus !== 'loading';
+    const connected =
+      ready &&
+      account &&
+      chain &&
+      (!authenticationStatus ||
+        authenticationStatus === 'authenticated');
+    // connected && setAddressToChain(account?.address,selectedChains[0]['address']);
+    if(connected){
+      
+    }
+    return (
+      <div
+        {...(!ready && {
+          'aria-hidden': true,
+          'style': {
+            opacity: 0,
+            pointerEvents: 'none',
+            userSelect: 'none',
+          },
+        })}
+      >
+        {(() => {
+          if (!connected) {
+            return (
+              <button onClick={openConnectModal} type="button" className="connectButtonAnother">
+                Connect Wallet
+              </button>
+            );
+          }
+
+          if (chain.unsupported) {
+            return (
+              <button onClick={openChainModal} type="button">
+                Wrong network
+              </button>
+            );
+          }
+
+          return (
+            <div style={{ display: 'flex', gap: 12 }}>
+              {/* <button
+                onClick={openChainModal}
+                style={{ display: 'flex', alignItems: 'center' }}
+                type="button"
+              >
+                {chain.hasIcon && (
+                  <div
+                    style={{
+                      background: chain.iconBackground,
+                      width: 12,
+                      height: 12,
+                      borderRadius: 999,
+                      overflow: 'hidden',
+                      marginRight: 4,
+                    }}
+                  >
+                    {chain.iconUrl && (
+                      <img
+                        alt={chain.name ?? 'Chain icon'}
+                        src={chain.iconUrl}
+                        style={{ width: 12, height: 12 }}
+                      />
+                    )}
+                  </div>
+                )}
+                {chain.name}
+              </button> */}
+
+              <button onClick={openAccountModal} type="button"  className="btn btn-primary">
+                {"Disconnect"}
+                {/* {account.displayName}
+                {account.displayBalance
+                  ? ` (${account.displayBalance})`
+                  : ''} */}
+              </button>
+            </div>
+          );
+        })()}
+      </div>
+    );
+  }}
+</ConnectButton.Custom>
+          }
+      {
+        selectedChains[0]['name'] === 'Polkadot' && walletContext.wallet &&             <Button
+        style={{marginLeft:"20px"}}
+        className='sub-wallet-btn sub-wallet-btn-small-size'
+        onClick={disconnect.bind(null, {})}
+        type={'primary'}
+      >DIsconnect</Button>
+      }
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    
 
     <Tooltip id="my-tooltip" />
-    <div style={{margin:"15% 38%"}}>
+    <div className="mainContent" style={{margin:"15% 38%"}}>
       <div className="mainHeading">
         <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p>
         <div className="d-flex align-items-center mb-3">
-          <div style={{backgroundColor:"#fdff0f", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>
-          <a data-tooltip-id="my-tooltip" data-tooltip-content="0xjhk1098jajqyuqqqiohh882182hkajhkl4933">
-            <p className="m-0">0xjhk1098jaj...4933</p>
-          </a>          
+        {selectedChains[0]['address'].length ? 
+        <div style={{backgroundColor:"#2ef704", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>:
+        <div style={{backgroundColor:"#fdff0f", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>
+        }
+          
+          <a data-tooltip-id="my-tooltip" data-tooltip-content={selectedChains[0]['address']}>
+            <p className="m-0">{selectedChains[0]['address'].length? shortenAddress(selectedChains[0]['address']): 'Not Connected'}</p>
+          </a>
         </div>
         {
           selectedChains.map(item=>(
@@ -201,7 +455,7 @@ const App = () => {
               </div>
             </div>
             <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
-              <input type="number" className="Inputs" placeholder="0"></input>          
+              <input type="number" className="Inputs"  placeholder="0" onChange={handleAmountChange} value={amount}></input>          
               <div className="d-flex align-items-center">
                 <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
                 <p className="m-0">HONEY</p>
@@ -223,9 +477,9 @@ const App = () => {
           </div>
         </div>
         <div className="innerHeadingLeft d-block" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
-        <input type="text" className="Inputs w-100" placeholder="Address"></input>          
+        <input type="text" className="Inputs w-100" placeholder="Address" value={addresss} onChange={handleAddressChange}></input>
         <div className=" d-flex justify-content-between">
-        <input type="number" className="Inputs" placeholder="0" disabled></input>          
+        <input type="number" className="Inputs" placeholder="0"  value={amount} disabled></input>          
           <div className="d-flex align-items-center">
             <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
             <p className="m-0">HONEY</p>
@@ -233,10 +487,111 @@ const App = () => {
         </div>
         </div>
         </div>
-        
-        {/* <ConnectButton label="Connect Wallet" className="connectButton" /> */}
+{
+  selectedChains[0]['name'] === 'Polkadot' ?
+  !walletContext.accounts[walletContext.accounts.length-1]?.address ?
+<button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
+:
+<button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
+}
 
-        <button style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={openModal}>Connect Wallet</button>
+      {
+          selectedChains[0]['name'] === 'Etheriem' ? isConnected ? <button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
+        : 
+<ConnectButton.Custom>
+  {({
+    account,
+    chain,
+    openAccountModal,
+    openChainModal,
+    openConnectModal,
+    authenticationStatus,
+    mounted,
+  }) => {
+    // Note: If your app doesn't use authentication, you
+    // can remove all 'authenticationStatus' checks
+    const ready = mounted && authenticationStatus !== 'loading';
+    const connected =
+      ready &&
+      account &&
+      chain &&
+      (!authenticationStatus ||
+        authenticationStatus === 'authenticated');
+
+    return (
+      <div
+        {...(!ready && {
+          'aria-hidden': true,
+          'style': {
+            opacity: 0,
+            pointerEvents: 'none',
+            userSelect: 'none',
+          },
+        })}
+      >
+        {(() => {
+          if (!connected) {
+            return (
+              <button onClick={openConnectModal} type="button" className="connectButton">
+                Connect Wallet
+              </button>
+            );
+          }
+
+          if (chain.unsupported) {
+            return (
+              <button onClick={openChainModal} type="button">
+                Wrong network
+              </button>
+            );
+          }
+
+          return (
+            <div style={{ display: 'flex', gap: 12 }}>
+              {/* <button
+                onClick={openChainModal}
+                style={{ display: 'flex', alignItems: 'center' }}
+                type="button"
+              >
+                {chain.hasIcon && (
+                  <div
+                    style={{
+                      background: chain.iconBackground,
+                      width: 12,
+                      height: 12,
+                      borderRadius: 999,
+                      overflow: 'hidden',
+                      marginRight: 4,
+                    }}
+                  >
+                    {chain.iconUrl && (
+                      <img
+                        alt={chain.name ?? 'Chain icon'}
+                        src={chain.iconUrl}
+                        style={{ width: 12, height: 12 }}
+                      />
+                    )}
+                  </div>
+                )}
+                {chain.name}
+              </button> */}
+
+              {/* <button onClick={openAccountModal} type="button">
+                {account.address}
+                {account.displayBalance
+                  ? ` (${account.displayBalance})`
+                  : ''}
+              </button> */}
+            </div>
+          );
+        })()}
+      </div>
+    );
+  }}
+</ConnectButton.Custom>
+:""
+      }
+          
 
       </div>
     </div>
