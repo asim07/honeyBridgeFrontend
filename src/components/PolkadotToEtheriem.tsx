@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
-import './PolkadptToEtheriem.css';
+import './PolkadptToEthereum.css';
 
 interface ParentComponentProps {
     submit: (amount: any, address: any) => void; // Updated to accept two parameters

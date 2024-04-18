@@ -66,12 +66,12 @@ input::-webkit-inner-spin-button {
 }
 @media only screen and (max-width: 1200px) and (min-width: 700px) {
     .mainContent{
-        margin:15% 32% !important
+        margin:8% 32% !important
     }    
 }
 @media only screen and (max-width: 700px) and (min-width: 400px) {
     .mainContent{
-        margin:15% 25% !important
+        margin:8% 25% !important
     }
 }
 
@@ -79,12 +79,12 @@ input::-webkit-inner-spin-button {
 
 @media only screen and (max-width: 400px) and (min-width: 100px) {
     .mainContent{
-        margin:15% 5% !important
+        margin:8% 5% !important
     }
 }
 @media only screen and (max-width: 700px) and (min-width: 200px) {
     .mainContent{
-        margin:15% 25% !important
+        margin:8% 25% !important
     }
     .navbarResp{
         display: flex !important;

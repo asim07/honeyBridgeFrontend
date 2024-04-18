@@ -72,7 +72,7 @@ function SelectWallet ({ onSelectWallet }: Props): React.ReactElement<Props> {
     <div className={'select-wallet-content'}>
       <div className='dotsama-wallet-list'>
         <div className='wallet-cat-title'>
-          Dotsama Wallets
+          Polkadot Wallets
         </div>
         {dotsamaWallets.map((wallet) => (walletItem(wallet, onClickDotsamaWallet)))}
       </div>

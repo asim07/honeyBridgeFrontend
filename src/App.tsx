@@ -9,7 +9,7 @@ import { Tooltip } from 'react-tooltip'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useWriteContract,useWaitForTransactionReceipt, useAccount } from 'wagmi';
+import { useWriteContract,useWaitForTransactionReceipt, useAccount, useBalance } from 'wagmi';
 import  abi from './utils/abi.json'
 import { Box, Avatar, Drawer, List, Stack, Toolbar } from "@mui/material";
 import sizeConfigs from "./configs/sizeConfigs";
@@ -18,7 +18,7 @@ import Topbar from "./common/Topbar";
 import './app.css';
 import { ethers } from 'ethers';
 import ParentComponent from './components/ParentComponent';
-import PolkadotToEtheriem from './components/PolkadotToEtheriem';
+import PolkadotToEthereum from './components/PolkadotToEthereum';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -102,14 +102,18 @@ const App = () => {
   useEffect(() => {
     if (walletContext.wallet && walletContext.walletType === 'substrate') {
       setConnected(true);
-    } else if (walletContext.evmWallet && walletContext.walletType === 'evm') {
-      navigate('/evm-wallet-info');
     }
   }, [walletContext]);
   const {address, isConnected} = useAccount();
+  const { data, isError, isLoading } = useBalance({
+    address: address,
+  })
   const setAddressToChain = (address,chainName) => {
+    console.log("HIIIIII", chainName, address);
+    console.log({chains});
     setChain(() => {
       return chains.map(item => {
+        console.log(item.name , chainName);
         if (item.name === chainName) {
           return {
             ...item,
@@ -224,7 +228,8 @@ const App = () => {
     setSidebarOpen(open);
   };
   const [showModal, setShowModal] = useState(false);
-  const [chains, setChain] = useState([{name:"Etheriem", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Polkadot", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
+  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Polkadot", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
+  console.log({chains});
   const selectedChains = chains.filter(chain => chain.selected);
   console.log({selectedChains});
   const nonSelectedChains = chains.filter(chain => !chain.selected);
@@ -239,15 +244,21 @@ const App = () => {
   useEffect(() => {
     if (address) {
       console.log({address});
-      setAddressToChain(address,'Etheriem')
+      setAddressToChain(address,'Ethereum')
     }
   }, [address]);
   useEffect(() => {
     if (!isConnected) {
       // console.log({address});
-      setAddressToChain('','Etheriem')
+      setAddressToChain('','Ethereum')
     }
   }, [!isConnected]);
+  // useEffect(() => {
+  //   if (!walletContext.accounts[walletContext.accounts.length-1]?.address) {
+  //     // console.log({address});
+  //     setAddressToChain('','Polkadot')
+  //   }
+  // }, [!walletContext.accounts[walletContext.accounts.length-1]?.address]);
   useEffect(() => {
     if (walletContext.accounts[walletContext.accounts.length-1]?.address) {
       setAddressToChain(walletContext.accounts[walletContext.accounts.length-1]?.address,'Polkadot')
@@ -268,6 +279,7 @@ const App = () => {
     handleClose();
   };
   const disconnect = () => {
+    setAddressToChain('','Polkadot')
     localStorage.clear();
     console.log('localStorage cleared!');
     
@@ -303,7 +315,7 @@ const App = () => {
       <Container>
         <Navbar.Brand href="#" style={{color:"white", fontWeight:"900"}}>
           <img src={assets.images.polkadot} style={{width:"25px", marginRight:"10px"}}></img>
-          HONEY</Navbar.Brand>
+          HIVVE BRIDGE</Navbar.Brand>
         <Navbar.Toggle style={{backgroundColor:"white"}} aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -338,7 +350,8 @@ const App = () => {
         authenticationStatus === 'authenticated');
     // connected && setAddressToChain(account?.address,selectedChains[0]['address']);
     if(connected){
-      
+      // Disconnect logic
+    authenticationStatus = undefined;
     }
     return (
       <div
@@ -428,9 +441,13 @@ const App = () => {
     
 
     <Tooltip id="my-tooltip" />
-    <div className="mainContent" style={{margin:"15% 38%"}}>
+    <div className="mainContent" style={{margin:"8% 38%"}}>
+      {/* <p>{balance}</p> */}
+    <p className="text-center mt-3" style={{fontSize:"40px", fontWeight:"900"}}>Swap Anytime</p>
+
       <div className="mainHeading">
         <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p>
+        {selectedChains[0]['name'] === 'Ethereum' ? `${data?.formatted ? Number(data?.formatted).toFixed(4): ""} ${data?.symbol? data?.symbol:""}` :"" }
         <div className="d-flex align-items-center mb-3">
         {selectedChains[0]['address'].length ? 
         <div style={{backgroundColor:"#2ef704", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>:
@@ -496,7 +513,7 @@ const App = () => {
 }
 
       {
-          selectedChains[0]['name'] === 'Etheriem' ? isConnected ? <button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
+          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
         : 
 <ConnectButton.Custom>
   {({
@@ -594,6 +611,7 @@ const App = () => {
           
 
       </div>
+      <p className="text-center mt-3" style={{fontSize:"20px"}}>The largest onchain marketplace. Buy and sell crypto on Ethereum and 7+ other chains.</p>
     </div>
     <MyModal
         show={showModal}
@@ -609,7 +627,7 @@ const App = () => {
     {/* <SelectWalletModal theme={'dark'} /> */}
 
     
-    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>ETHERIUM TO POLKADOT</button> */}
+    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>Ethereum TO POLKADOT</button> */}
     {/* <button
      style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px", fontSize:"14px", marginLeft:"20px"}}
       // onClick={selectWallet.open}

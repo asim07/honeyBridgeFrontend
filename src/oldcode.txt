@@ -73,9 +73,9 @@
       padding: 12,
     }}
   >
-    {/* <PolkadotToEtheriem isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpens} setIsModalOpen={setIsModalOpens} />       */}
+    {/* <PolkadotToEthereum isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpens} setIsModalOpen={setIsModalOpens} />       */}
     <ParentComponent isConnected={isConnected}  submit={submit} isPending={CustomIsPending} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />      
-    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>ETHERIUM TO POLKADOT</button> */}
+    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>Ethereum TO POLKADOT</button> */}
     {/* <button
      style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px", fontSize:"14px", marginLeft:"20px"}}
       // onClick={selectWallet.open}
