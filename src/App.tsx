@@ -9,7 +9,7 @@ import { Tooltip } from 'react-tooltip'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useWriteContract,useWaitForTransactionReceipt, useAccount, useBalance } from 'wagmi';
+import { useWriteContract,useWaitForTransactionReceipt, useAccount, useBalance ,useReadContract} from 'wagmi';
 import  abi from './utils/abi.json'
 import { Box, Avatar, Drawer, List, Stack, Toolbar } from "@mui/material";
 import sizeConfigs from "./configs/sizeConfigs";
@@ -19,6 +19,8 @@ import './app.css';
 import { ethers } from 'ethers';
 import ParentComponent from './components/ParentComponent';
 import PolkadotToEthereum from './components/PolkadotToEthereum';
+import { AccountInfo } from '@polkadot/types/interfaces'
+
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,10 +36,39 @@ const App = () => {
   const [addresss, setAddress] = useState('');  
   const selectWallet = useContext(OpenSelectWallet);
   const walletContext = useContext(WalletContext);
+  console.log({main:walletContext.accounts});
   const navigate = useNavigate();
   const [loaderButton, setloaderButton] = useState(false);
   const [clickedButton, setclickedButton] = useState(false);
+  const [polkadotBalance, setPolkadotBalance] = useState(0);
   let api: ApiPromise;
+  async function getBalancePolkadot(address: string) {
+    console.log('Insidee',{ address })
+    const provider = new WsProvider('wss://www.devnests.com/blockchain/')
+    api = await ApiPromise.create({ provider });
+      const account = (await api.query.system.account(address)) as AccountInfo
+      const { nonce, data: balance } = account
+  
+      console.log('Free Balance: ', balance.free.toString())
+      console.log('Reserved Balance: ', balance.reserved.toString())
+      console.log('Nonce :', nonce.toHuman())
+      console.log(' Existential deposit :', api.consts.balances.existentialDeposit.toHuman())
+      // Assuming balance.free, balance.reserved, and api.consts.balances.existentialDeposit are strings from API response
+      const freeBalance: number = Number(balance.free)
+      // console.log(freeBalance)
+      console.log(freeBalance)
+      const reservedBalance: number = Number(balance.reserved)
+      console.log(reservedBalance)
+      const existentialDeposit: number = Number(api.consts.balances.existentialDeposit)
+      console.log(existentialDeposit)
+      const val: number = freeBalance - reservedBalance - existentialDeposit
+      // Ensure val is not negative
+      let transferableBalance: number = Math.max(val - 1, 0)
+      console.log({transferableBalance});
+      const divisor = Math.pow(10, 12);
+      transferableBalance = transferableBalance / divisor;
+    return transferableBalance.toFixed(4);
+  }
   const sendTransaction = async(data)=>{
 
 
@@ -105,9 +136,22 @@ const App = () => {
     }
   }, [walletContext]);
   const {address, isConnected} = useAccount();
-  const { data, isError, isLoading } = useBalance({
-    address: address,
+  const contractAddress = '0x23A91f96A3BA610f0b5268E9448080F4253f7D43';
+  const { data: balance } = useReadContract({
+    address: contractAddress,
+    abi,
+    functionName: 'balanceOf',
+    args: [address],
   })
+  const { data: symbol } = useReadContract({
+    address: contractAddress,
+    abi,
+    functionName: 'symbol',
+    args: [],
+  })
+  // const { data, isError, isLoading } = useBalance({
+  //   address: address,
+  // })
   const setAddressToChain = (address,chainName) => {
     console.log("HIIIIII", chainName, address);
     console.log({chains});
@@ -142,7 +186,6 @@ const App = () => {
     setIsModalOpen(false);
   };
   const [isModalOpens, setIsModalOpens] = useState(false);
-  const contractAddress = '0x23A91f96A3BA610f0b5268E9448080F4253f7D43';
   const openModals  = () => {
     setIsModalOpens(true);
   };
@@ -247,9 +290,15 @@ const App = () => {
       setAddressToChain(address,'Ethereum')
     }
   }, [address]);
+  // useEffect(()=>{
+  // if(localStorage.getItem('WagmiDisconnected')){
+  //   localStorage.clear();
+  // }
+  // },[localStorage.getItem('WagmiDisconnected')]);
   useEffect(() => {
     if (!isConnected) {
       // console.log({address});
+      // localStorage.setItem('WagmiDisconnected','true');
       setAddressToChain('','Ethereum')
     }
   }, [!isConnected]);
@@ -262,6 +311,7 @@ const App = () => {
   useEffect(() => {
     if (walletContext.accounts[walletContext.accounts.length-1]?.address) {
       setAddressToChain(walletContext.accounts[walletContext.accounts.length-1]?.address,'Polkadot')
+      getBalancePolkadot(walletContext.accounts[walletContext.accounts.length-1]?.address).then((balancee)=>  setPolkadotBalance(Number(balancee)));
     }
   }, [walletContext.accounts[walletContext.accounts.length-1]?.address]);
   const shortenAddress = (address) => {
@@ -280,7 +330,8 @@ const App = () => {
   };
   const disconnect = () => {
     setAddressToChain('','Polkadot')
-    localStorage.clear();
+    setPolkadotBalance(0);
+    localStorage.removeItem('wallet-type');
     console.log('localStorage cleared!');
     
     if ((walletContext as any).setAccounts) {
@@ -447,7 +498,23 @@ const App = () => {
 
       <div className="mainHeading">
         <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p>
-        {selectedChains[0]['name'] === 'Ethereum' ? `${data?.formatted ? Number(data?.formatted).toFixed(4): ""} ${data?.symbol? data?.symbol:""}` :"" }
+
+        {selectedChains[0]['name'] === 'Ethereum' ? 
+        balance?
+        <div  className="d-flex justify-content-between align-items-center" style={{fontSize:"20px"}}>
+          <p>Balance:</p>
+          <p>{`${balance ? `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`: ""} `}</p> 
+        </div>:
+        ""
+        
+        :polkadotBalance? 
+        <div className="d-flex  justify-content-between align-items-center" style={{fontSize:"20px"}}>
+        <p>Balance:</p>
+        
+        <p>{`${polkadotBalance} HNY`}</p>
+        </div>
+        :"" }
+
         <div className="d-flex align-items-center mb-3">
         {selectedChains[0]['address'].length ? 
         <div style={{backgroundColor:"#2ef704", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>:
