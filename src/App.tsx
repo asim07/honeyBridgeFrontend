@@ -2,7 +2,7 @@ import { ListItemButton, ListItemIcon } from "@mui/material";
 import colorConfigs from "./configs/colorConfigs";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import MyModal from './components/chainDropdown';
-
+import { BigNumber } from 'bignumber.js';
 import assets from "./assets";
 import Container from 'react-bootstrap/Container';
 import { Tooltip } from 'react-tooltip'
@@ -40,7 +40,7 @@ const App = () => {
   const navigate = useNavigate();
   const [loaderButton, setloaderButton] = useState(false);
   const [clickedButton, setclickedButton] = useState(false);
-  const [HoneyBalance, setHoneyBalance] = useState(0);
+  const [HoneyBalance, setHoneyBalance] = useState('Loaded');
   let api: ApiPromise;
   async function getBalanceHoney(address: string) {
     try{
@@ -146,8 +146,11 @@ const App = () => {
     abi,
     functionName: 'balanceOf',
     args: [address],
-  })
-  console.log('Eth Balance',balance);
+  });
+  
+  // Assuming balance and symbol are defined somewhere above in your code
+  const balanceNumber = typeof balance === 'string' ? new BigNumber(balance as string) : new BigNumber(balance as number);
+  const isBalanceZero = balanceNumber.isEqualTo(0);
   const { data: symbol } = useReadContract({
     address: contractAddress,
     abi,
@@ -505,19 +508,27 @@ const App = () => {
         {/* <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p> */}
 
         {selectedChains[0]['name'] === 'Ethereum' ? 
-        balance || balance === 0?
+
         <div style={{fontSize:"20px",  borderRadius:"20px"}}>
           <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>{`${balance=== 0 ? balance : `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`} `}</p> 
-        </div>:
-        ""
+          <p style={{fontSize:"30px"}}>
+            
+          {isBalanceZero ? 
+        '0' :
+        `${balanceNumber.dividedBy(1e12).toFixed(4)} ${symbol}`
+      }
+          </p> 
+        </div>
         
-        :HoneyBalance || HoneyBalance === 0? 
+        :HoneyBalance === 'Loaded'? 
         <div style={{fontSize:"20px",  borderRadius:"20px"}}>
+          <p className="m-0">Balance</p>
+          <p style={{fontSize:"30px"}}>{`...`}</p>
+        </div>:<div style={{fontSize:"20px",  borderRadius:"20px"}}>
           <p className="m-0">Balance</p>
           <p style={{fontSize:"30px"}}>{`${HoneyBalance} HNY`}</p>
         </div>
-        :"" }
+        }
 
         <div className="d-flex align-items-center mb-3">
         {selectedChains[0]['address'].length ? 
