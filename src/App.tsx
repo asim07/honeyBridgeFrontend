@@ -504,18 +504,17 @@ const App = () => {
         {/* <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p> */}
 
         {selectedChains[0]['name'] === 'Ethereum' ? 
-        balance?
+        balance || balance === 0?
         <div style={{fontSize:"20px",  borderRadius:"20px"}}>
           <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>{`${balance ? `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`: ""} `}</p> 
+          <p style={{fontSize:"30px"}}>{`${balance=== 0 ? balance : `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`} `}</p> 
         </div>:
         ""
         
-        :HoneyBalance? 
-        <div className="d-flex  justify-content-between align-items-center" style={{fontSize:"20px"}}>
-        <p>Balance:</p>
-        
-        <p>{`${HoneyBalance} HNY`}</p>
+        :HoneyBalance || HoneyBalance === 0? 
+        <div style={{fontSize:"20px",  borderRadius:"20px"}}>
+          <p className="m-0">Balance</p>
+          <p style={{fontSize:"30px"}}>{`${HoneyBalance} HNY`}</p>
         </div>
         :"" }
 
