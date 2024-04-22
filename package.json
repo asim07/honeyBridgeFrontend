@@ -11,6 +11,7 @@
     "@polkadot/api": "^10.12.4",
     "@polkadot/extension-dapp": "^0.46.9",
     "@polkadot/extension-inject": "^0.46.9",
+    "@polkadot/keyring": "^12.6.2",
     "@polkadot/types": "^10.12.4",
     "@polkadot/util": "^12.6.2",
     "@rainbow-me/rainbowkit": "^2.0.2",
@@ -43,7 +44,8 @@
     "util": "0.12.4",
     "viem": "^2.7.12",
     "wagmi": "^2.5.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "web3-validator": "^2.0.5"
   },
   "scripts": {
     "dev": "react-scripts start",

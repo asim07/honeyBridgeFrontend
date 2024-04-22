@@ -1,6 +1,10 @@
 import { ListItemButton, ListItemIcon } from "@mui/material";
+import { decodeAddress, encodeAddress } from '@polkadot/keyring';
+import { hexToU8a, isHex } from '@polkadot/util';
+
 import colorConfigs from "./configs/colorConfigs";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { isAddress } from 'web3-validator';
 import MyModal from './components/chainDropdown';
 import { BigNumber } from 'bignumber.js';
 import assets from "./assets";
@@ -75,7 +79,12 @@ const App = () => {
   }
   const sendTransaction = async(data)=>{
 
+    if(isAddress(addresss)){
 
+    }else{
+      toast('Invalid Address')
+      return;
+    }
     console.log(amount , addresss);
     if(!amount.length || !addresss.length){
       console.log('HWW');
@@ -86,7 +95,7 @@ const App = () => {
       const provider = new WsProvider('wss://www.devnests.com/blockchain/')
       api = await ApiPromise.create({ provider });
       console.log({api});
-      console.log({apia:api})
+      // console.log({apia:api})
       // '0x08378D177abD7d8b2EFF37c24E84622118974933'
       const tx = api.tx.recieverModule.transferToTreasury(Number(`${amount}000000000000`), addresss);
       await tx.signAndSend(data.address, { signer: data.signer }, ({ status }) => {
@@ -107,6 +116,7 @@ const App = () => {
                  // Close the toast after a delay (e.g., 5 seconds)
                 toast.dismiss(toastId);
                 toast('Transaction Finalized...');
+                setHoneyBalance((prev=> prev - amount));
                 setclickedButton(false);
                 setloaderButton(false);
               }
@@ -147,10 +157,17 @@ const App = () => {
     functionName: 'balanceOf',
     args: [address],
   });
-  
+  let [ethAddress, setEthAddress] = useState<number | string>(0); // Initialize with number or string type
   // Assuming balance and symbol are defined somewhere above in your code
   const balanceNumber = typeof balance === 'string' ? new BigNumber(balance as string) : new BigNumber(balance as number);
   const isBalanceZero = balanceNumber.isEqualTo(0);
+// Convert BigNumber to string before setting to ethAddress
+// Set ethAddress state directly based on the balance value
+useEffect(() => {
+
+    setEthAddress(balanceNumber.toString());
+
+}, [balance]);
   const { data: symbol } = useReadContract({
     address: contractAddress,
     abi,
@@ -227,7 +244,26 @@ const App = () => {
   };
   console.log({isConfirming, isConfirmed})
   const [notificationsShown, setNotificationsShown] = useState(false);
-
+  const isValidAddressPolkadotAddress = (address) => {
+    try {
+      console.log({address});
+      encodeAddress(
+        isHex(address)
+          ? hexToU8a(address)
+          : decodeAddress(address)
+      );
+  
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+  useEffect(() => {
+    if (isPending) {
+      setInprogress(0)
+    }
+  }, [!isPending]);
+  
   useEffect(() => {
     if (isConfirming) {
       showConfirmationNotification();
@@ -250,23 +286,38 @@ const App = () => {
   const showErrorNotification  = (error: any) => {
     toast(error);
   };
+  let toastId;
+  let [inpro, setInprogress]= useState<number | string>(0);
   const showConfirmationNotification = () => {
-    toast('Transaction is in Progress..');
+    setInprogress(1);
+    toastId = toast("Transaction is in progress", {
+      autoClose: false,
+    });
   };
 
   const showSuccessNotification = () => {
+    console.log('DONE',Number(ethAddress) - Number(amount));
+    setEthAddress(Number(ethAddress) - Number(amount) * 1000000000000);
+    toast.dismiss(toastId);
+    setInprogress(0);
     toast('Transaction Successful!');
   };
   console.log({isPending}); 
   let CustomIsPending = isPending || isConfirming
 
   const submit = (obj: any) => {
-    console.log(obj.amount , obj.addresss);
+    console.log({oqo:isValidAddressPolkadotAddress(obj.addresss)})
+    if(!isValidAddressPolkadotAddress(obj.addresss)){
+      toast('Invalid Address')
+      return;
+    }
     if(obj.amount.length && obj.addresss.length){
+      setInprogress(1);
+      console.log(obj.amount , obj.addresss);
       writeContract({
         address: contractAddress,
         abi,
-        functionName: 'transferToHoney',
+        functionName: 'transferToPolkadot',
         args: [ethers.parseUnits(obj.amount, 12), obj.addresss],
       });
     }else{
@@ -515,7 +566,7 @@ const App = () => {
             
           {isBalanceZero ? 
         '0' :
-        `${balanceNumber.dividedBy(1e12).toFixed(4)} ${symbol}`
+        `${new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4) === 'NaN' ?'---': new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4)} ${symbol}`
       }
           </p> 
         </div>
@@ -526,7 +577,7 @@ const App = () => {
           <p style={{fontSize:"30px"}}>{`...`}</p>
         </div>:<div style={{fontSize:"20px",  borderRadius:"20px"}}>
           <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>{`${HoneyBalance} HNY`}</p>
+          <p style={{fontSize:"30px"}}>{`${walletContext.accounts[walletContext.accounts.length-1]?.address?HoneyBalance:'---'} HNY`}</p>
         </div>
         }
 
@@ -595,7 +646,7 @@ const App = () => {
 }
 
       {
-          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
+          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button disabled={inpro ===1? true: false} style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>{inpro ===1? 'Progress...':'Transfer'}</button>
         : 
 <ConnectButton.Custom>
   {({
