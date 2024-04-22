@@ -147,6 +147,7 @@ const App = () => {
     functionName: 'balanceOf',
     args: [address],
   })
+  console.log('Eth Balance',balance);
   const { data: symbol } = useReadContract({
     address: contractAddress,
     abi,
