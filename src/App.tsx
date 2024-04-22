@@ -18,7 +18,7 @@ import Topbar from "./common/Topbar";
 import './app.css';
 import { ethers } from 'ethers';
 import ParentComponent from './components/ParentComponent';
-import PolkadotToEthereum from './components/PolkadotToEthereum';
+// import polkadotToEthereum from './components/polkadotToEthereum';
 import { AccountInfo } from '@polkadot/types/interfaces'
 
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -40,9 +40,9 @@ const App = () => {
   const navigate = useNavigate();
   const [loaderButton, setloaderButton] = useState(false);
   const [clickedButton, setclickedButton] = useState(false);
-  const [polkadotBalance, setPolkadotBalance] = useState(0);
+  const [HoneyBalance, setHoneyBalance] = useState(0);
   let api: ApiPromise;
-  async function getBalancePolkadot(address: string) {
+  async function getBalanceHoney(address: string) {
     console.log('Insidee',{ address })
     const provider = new WsProvider('wss://www.devnests.com/blockchain/')
     api = await ApiPromise.create({ provider });
@@ -129,7 +129,7 @@ const App = () => {
       connectToChain(walletContext.wallet?.provider);
     }
   }, [walletContext.wallet?.provider, walletContext.accounts[walletContext.accounts.length-1]?.address, walletContext.wallet?.signer]);
-  let [connectedToPolkadot,setConnected]= useState(false);
+  let [connectedToHoney,setConnected]= useState(false);
   useEffect(() => {
     if (walletContext.wallet && walletContext.walletType === 'substrate') {
       setConnected(true);
@@ -161,7 +161,7 @@ const App = () => {
         if (item.name === chainName) {
           return {
             ...item,
-            address: address // Set the address for Polkadot
+            address: address // Set the address for Honey
           };
         }
         return {
@@ -258,7 +258,7 @@ const App = () => {
       writeContract({
         address: contractAddress,
         abi,
-        functionName: 'transferToPolkadot',
+        functionName: 'transferToHoney',
         args: [ethers.parseUnits(obj.amount, 12), obj.addresss],
       });
     }else{
@@ -271,7 +271,7 @@ const App = () => {
     setSidebarOpen(open);
   };
   const [showModal, setShowModal] = useState(false);
-  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Polkadot", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
+  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Honey", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
   console.log({chains});
   const selectedChains = chains.filter(chain => chain.selected);
   console.log({selectedChains});
@@ -305,13 +305,13 @@ const App = () => {
   // useEffect(() => {
   //   if (!walletContext.accounts[walletContext.accounts.length-1]?.address) {
   //     // console.log({address});
-  //     setAddressToChain('','Polkadot')
+  //     setAddressToChain('','Honey')
   //   }
   // }, [!walletContext.accounts[walletContext.accounts.length-1]?.address]);
   useEffect(() => {
     if (walletContext.accounts[walletContext.accounts.length-1]?.address) {
-      setAddressToChain(walletContext.accounts[walletContext.accounts.length-1]?.address,'Polkadot')
-      getBalancePolkadot(walletContext.accounts[walletContext.accounts.length-1]?.address).then((balancee)=>  setPolkadotBalance(Number(balancee)));
+      setAddressToChain(walletContext.accounts[walletContext.accounts.length-1]?.address,'Honey')
+      getBalanceHoney(walletContext.accounts[walletContext.accounts.length-1]?.address).then((balancee)=>  setHoneyBalance(Number(balancee)));
     }
   }, [walletContext.accounts[walletContext.accounts.length-1]?.address]);
   const shortenAddress = (address) => {
@@ -329,8 +329,8 @@ const App = () => {
     handleClose();
   };
   const disconnect = () => {
-    setAddressToChain('','Polkadot')
-    setPolkadotBalance(0);
+    setAddressToChain('','Honey')
+    setHoneyBalance(0);
     localStorage.removeItem('wallet-type');
     console.log('localStorage cleared!');
     
@@ -376,8 +376,8 @@ const App = () => {
           >
           </Nav>
           {
-  selectedChains[0]['name'] === 'Polkadot' ?
-  !walletContext.wallet &&   <Button style={{backgroundColor:"#fcff6b", borderRight:"2px solid #dac400", borderBottom:"2px solid #dac400"}} onClick={selectWallet.open}>Connect Wallet</Button>
+  selectedChains[0]['name'] === 'Honey' ?
+  !walletContext.wallet &&   <Button style={{backgroundColor:"#5f894d", borderRight:"2px solid #5f894d",color:"white", borderBottom:"2px solid #5f894d"}} onClick={selectWallet.open}>Connect Wallet</Button>
             :
             <ConnectButton.Custom>
   {({
@@ -478,7 +478,7 @@ const App = () => {
 </ConnectButton.Custom>
           }
       {
-        selectedChains[0]['name'] === 'Polkadot' && walletContext.wallet &&             <Button
+        selectedChains[0]['name'] === 'Honey' && walletContext.wallet &&             <Button
         style={{marginLeft:"20px"}}
         className='sub-wallet-btn sub-wallet-btn-small-size'
         onClick={disconnect.bind(null, {})}
@@ -494,24 +494,24 @@ const App = () => {
     <Tooltip id="my-tooltip" />
     <div className="mainContent" style={{margin:"8% 38%"}}>
       {/* <p>{balance}</p> */}
-    <p className="text-center mt-3" style={{fontSize:"40px", fontWeight:"900"}}>Swap Anytime</p>
+    <p className="text-center mt-3" style={{fontSize:"40px", fontWeight:"900"}}>Bridge Token Anytime</p>
 
       <div className="mainHeading">
-        <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p>
+        {/* <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p> */}
 
         {selectedChains[0]['name'] === 'Ethereum' ? 
         balance?
-        <div  className="d-flex justify-content-between align-items-center" style={{fontSize:"20px"}}>
-          <p>Balance:</p>
-          <p>{`${balance ? `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`: ""} `}</p> 
+        <div style={{fontSize:"20px",  borderRadius:"20px"}}>
+          <p className="m-0">Balance</p>
+          <p style={{fontSize:"30px"}}>{`${balance ? `${String(Number(balance) / 1000000000000).split('.')[0]}.${String(Number(balance) / 1000000000000).split('.')[1].slice(0,4)} ${symbol}`: ""} `}</p> 
         </div>:
         ""
         
-        :polkadotBalance? 
+        :HoneyBalance? 
         <div className="d-flex  justify-content-between align-items-center" style={{fontSize:"20px"}}>
         <p>Balance:</p>
         
-        <p>{`${polkadotBalance} HNY`}</p>
+        <p>{`${HoneyBalance} HNY`}</p>
         </div>
         :"" }
 
@@ -561,7 +561,7 @@ const App = () => {
           </div>
         </div>
         <div className="innerHeadingLeft d-block" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
-        <input type="text" className="Inputs w-100" placeholder="Address" value={addresss} onChange={handleAddressChange}></input>
+        <input type="text" className="Inputs w-100 addressInput" placeholder="Address" value={addresss} onChange={handleAddressChange}></input>
         <div className=" d-flex justify-content-between">
         <input type="number" className="Inputs" placeholder="0"  value={amount} disabled></input>          
           <div className="d-flex align-items-center">
@@ -572,15 +572,15 @@ const App = () => {
         </div>
         </div>
 {
-  selectedChains[0]['name'] === 'Polkadot' ?
+  selectedChains[0]['name'] === 'Honey' ?
   !walletContext.accounts[walletContext.accounts.length-1]?.address ?
-<button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
+<button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px",color:"white", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
 :
-<button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
+<button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
 }
 
       {
-          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button  style={{backgroundColor:"#fcff6b", width:"100%", borderRight:"2px solid #dac400", borderBottom:"4px solid #dac400", padding:"10px 0px", fontSize:"20px", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
+          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
         : 
 <ConnectButton.Custom>
   {({
@@ -678,7 +678,7 @@ const App = () => {
           
 
       </div>
-      <p className="text-center mt-3" style={{fontSize:"20px"}}>The largest onchain marketplace. Buy and sell crypto on Ethereum and 7+ other chains.</p>
+      {/* <p className="text-center mt-3" style={{fontSize:"20px"}}>HIVVE BRIDGE</p> */}
     </div>
     <MyModal
         show={showModal}
@@ -694,7 +694,7 @@ const App = () => {
     {/* <SelectWalletModal theme={'dark'} /> */}
 
     
-    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>Ethereum TO POLKADOT</button> */}
+    {/* <button style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px"}} onClick={openModal}>Ethereum TO Honey</button> */}
     {/* <button
      style={{backgroundColor:"#2776fd", color:"white", border:"None", borderRadius:"5px", padding:"15px", fontSize:"14px", marginLeft:"20px"}}
       // onClick={selectWallet.open}

@@ -13,24 +13,33 @@
     cursor: pointer;
 }
 .connectButton{
-    background-color:#fcff6b;
+    background-color:#5f894d;
     width:100%; 
-    border-right:2px solid #dac400; 
-    border-bottom:4px solid #dac400; 
+    border-right:2px solid #5f894d; 
+    border-bottom:4px solid #5f894d; 
     padding:10px 0px;
     font-size:20px;
-    border-radius:10px
+    border-radius:10px;
+    color: white;
+
+}
+.addressInput::placeholder{
+font-size: 25px !important;
+}
+.addressInput{
+font-size: 18px !important;
 }
 .connectButtonAnother{
-    background-color:#fcff6b;
+    background-color:#5f894d;
     width:100%;
     height: 32px;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 0px;
-    border-right:2px solid #dac400; 
-    border-bottom:2px solid #dac400; 
+    border-right:2px solid #5f894d; 
+    border-bottom:2px solid #5f894d; 
     padding:10px 14px;
     font-size:14px;
     border-radius:5px;
