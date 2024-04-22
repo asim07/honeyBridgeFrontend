@@ -43,31 +43,35 @@ const App = () => {
   const [HoneyBalance, setHoneyBalance] = useState(0);
   let api: ApiPromise;
   async function getBalanceHoney(address: string) {
-    console.log('Insidee',{ address })
-    const provider = new WsProvider('wss://www.devnests.com/blockchain/')
-    api = await ApiPromise.create({ provider });
-      const account = (await api.query.system.account(address)) as AccountInfo
-      const { nonce, data: balance } = account
-  
-      console.log('Free Balance: ', balance.free.toString())
-      console.log('Reserved Balance: ', balance.reserved.toString())
-      console.log('Nonce :', nonce.toHuman())
-      console.log(' Existential deposit :', api.consts.balances.existentialDeposit.toHuman())
-      // Assuming balance.free, balance.reserved, and api.consts.balances.existentialDeposit are strings from API response
-      const freeBalance: number = Number(balance.free)
-      // console.log(freeBalance)
-      console.log(freeBalance)
-      const reservedBalance: number = Number(balance.reserved)
-      console.log(reservedBalance)
-      const existentialDeposit: number = Number(api.consts.balances.existentialDeposit)
-      console.log(existentialDeposit)
-      const val: number = freeBalance - reservedBalance - existentialDeposit
-      // Ensure val is not negative
-      let transferableBalance: number = Math.max(val - 1, 0)
-      console.log({transferableBalance});
-      const divisor = Math.pow(10, 12);
-      transferableBalance = transferableBalance / divisor;
-    return transferableBalance.toFixed(4);
+    try{
+
+      const provider = new WsProvider('wss://www.devnests.com/blockchain/')
+      api = await ApiPromise.create({ provider });
+        const account = (await api.query.system.account(address)) as AccountInfo
+        const { nonce, data: balance } = account
+    
+        console.log('Free Balance: ', balance.free.toString())
+        console.log('Reserved Balance: ', balance.reserved.toString())
+        console.log('Nonce :', nonce.toHuman())
+        console.log(' Existential deposit :', api.consts.balances.existentialDeposit.toHuman())
+        // Assuming balance.free, balance.reserved, and api.consts.balances.existentialDeposit are strings from API response
+        const freeBalance: number = Number(balance.free)
+        // console.log(freeBalance)
+        console.log(freeBalance)
+        const reservedBalance: number = Number(balance.reserved)
+        console.log(reservedBalance)
+        const existentialDeposit: number = Number(api.consts.balances.existentialDeposit)
+        console.log(existentialDeposit)
+        const val: number = freeBalance - reservedBalance - existentialDeposit
+        // Ensure val is not negative
+        let transferableBalance: number = Math.max(val - 1, 0)
+        console.log({transferableBalance});
+        const divisor = Math.pow(10, 12);
+        transferableBalance = transferableBalance / divisor;
+      return transferableBalance.toFixed(4);
+    }catch(err:any){
+      console.log({err});
+    }
   }
   const sendTransaction = async(data)=>{
 
