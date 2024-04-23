@@ -330,7 +330,7 @@ useEffect(() => {
     setSidebarOpen(open);
   };
   const [showModal, setShowModal] = useState(false);
-  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Honey", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
+  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth.default, selected:false, tick:assets.images.tick.default, address:""},{name:"Honey", logo:assets.images.polkadot.default, selected:true, tick:assets.images.tick.default, address:""}])
   console.log({chains});
   const selectedChains = chains.filter(chain => chain.selected);
   console.log({selectedChains});
@@ -424,7 +424,7 @@ useEffect(() => {
     <Navbar expand="lg" style={{backgroundColor: "rgba(0,0,0,0.0)", color:"white", borderBottom:"1px solid #2f3645"}}>
       <Container>
         <Navbar.Brand href="#" style={{color:"white", fontWeight:"900"}}>
-          <img src={assets.images.polkadot} style={{width:"25px", marginRight:"10px"}}></img>
+          <img src={assets.images.polkadot.default} style={{width:"25px", marginRight:"10px"}}></img>
           HIVVE BRIDGE</Navbar.Brand>
         <Navbar.Toggle style={{backgroundColor:"white"}} aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -478,7 +478,7 @@ useEffect(() => {
           if (!connected) {
             return (
               <button onClick={openConnectModal} type="button" className="connectButtonAnother">
-                Connect Wallet
+                Connect Wallett
               </button>
             );
           }
@@ -600,21 +600,21 @@ useEffect(() => {
                 <p className="m-0 froms">From</p>
                 <div className="d-flex drops dropdown" onClick={handleShow}>
                   <p className="m-0">{item.name}</p>
-                  <img src={assets.images.arrow} style={{width:"20px"}}></img>
+                  <img src={assets.images.arrow.default} style={{width:"20px"}}></img>
                 </div>
               </div>
             </div>
             <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
               <input type="number" className="Inputs"  placeholder="0" onChange={handleAmountChange} value={amount}></input>          
               <div className="d-flex align-items-center">
-                <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
+                <img src={assets.images.polkadot.default} style={{width:"24px", marginRight:"10px"}}></img>
                 <p className="m-0">HONEY</p>
               </div>
             </div>
             </div>
           ))
         }
-        <img className="chnage" src={assets.images.downarrow} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
+        <img className="chnage" src={assets.images.downarrow.default} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
         <div className="content">
         <div className="innerHeadingLeft" style={{backgroundColor:"#222938", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
           <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img>
@@ -631,7 +631,7 @@ useEffect(() => {
         <div className=" d-flex justify-content-between">
         <input type="number" className="Inputs" placeholder="0"  value={amount} disabled></input>          
           <div className="d-flex align-items-center">
-            <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
+            <img src={assets.images.polkadot.default} style={{width:"24px", marginRight:"10px"}}></img>
             <p className="m-0">HONEY</p>
           </div>
         </div>
