@@ -331,7 +331,7 @@ useEffect(() => {
     setSidebarOpen(open);
   };
   const [showModal, setShowModal] = useState(false);
-  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth.default, selected:false, tick:assets.images.tick.default, address:""},{name:"Honey", logo:assets.images.polkadot.default, selected:true, tick:assets.images.tick.default, address:""}])
+  const [chains, setChain] = useState([{name:"Ethereum", logo:assets.images.eth, selected:false, tick:assets.images.tick, address:""},{name:"Honey", logo:assets.images.polkadot, selected:true, tick:assets.images.tick, address:""}])
   console.log({chains});
   const selectedChains = chains.filter(chain => chain.selected);
   console.log({selectedChains});
@@ -422,10 +422,10 @@ useEffect(() => {
     </div>
     <ToastContainer />
     {/* NAVAR */}
-    <Navbar expand="lg" style={{backgroundColor: "rgba(0,0,0,0.0)", color:"white", borderBottom:"1px solid #2f3645"}}>
+    <Navbar expand="lg" style={{backgroundColor: "#2673fa", color:"white", borderBottom:"1px solid #2f3645"}}>
       <Container>
         <Navbar.Brand href="#" style={{color:"white", fontWeight:"900"}}>
-          <img src={assets.images.polkadot.default} style={{width:"25px", marginRight:"10px"}}></img>
+          <img src={assets.images.polkadot} style={{width:"35px",borderRadius:"50%", marginRight:"10px", backgroundColor:"white"}}></img>
           HIVVE BRIDGE</Navbar.Brand>
         <Navbar.Toggle style={{backgroundColor:"white"}} aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -437,7 +437,7 @@ useEffect(() => {
           </Nav>
           {
   selectedChains[0]['name'] === 'Honey' ?
-  !walletContext.wallet &&   <Button style={{backgroundColor:"#5f894d", borderRight:"2px solid #5f894d",color:"white", borderBottom:"2px solid #5f894d"}} onClick={selectWallet.open}>Connect Wallet</Button>
+  !walletContext.wallet &&   <Button style={{backgroundColor:"white", borderRight:"2px solid #2673fa",color:"#2673fa", borderBottom:"2px solid #2673fa"}} onClick={selectWallet.open}>Connect Wallet</Button>
             :
             <ConnectButton.Custom>
   {({
@@ -479,7 +479,7 @@ useEffect(() => {
           if (!connected) {
             return (
               <button onClick={openConnectModal} type="button" className="connectButtonAnother">
-                Connect Wallett
+                Connect Wallet
               </button>
             );
           }
@@ -522,7 +522,7 @@ useEffect(() => {
                 {chain.name}
               </button> */}
 
-              <button onClick={openAccountModal} type="button"  className="btn btn-primary">
+              <button onClick={openAccountModal} type="button"  className="btn btn-primary connectButtonAnother">
                 {"Disconnect"}
                 {/* {account.displayName}
                 {account.displayBalance
@@ -540,7 +540,7 @@ useEffect(() => {
       {
         selectedChains[0]['name'] === 'Honey' && walletContext.wallet &&             <Button
         style={{marginLeft:"20px"}}
-        className='sub-wallet-btn sub-wallet-btn-small-size'
+        className='sub-wallet-btn sub-wallet-btn-small-size connectButtonAnothers'
         onClick={disconnect.bind(null, {})}
         type={'primary'}
       >DIsconnect</Button>
@@ -552,37 +552,13 @@ useEffect(() => {
     
 
     <Tooltip id="my-tooltip" />
-    <div className="mainContent" style={{margin:"8% 38%"}}>
+    <div className="mainContent" style={{margin:"8% 38%", padding:"20px", borderRadius:"10px"}}>
       {/* <p>{balance}</p> */}
-    <p className="text-center mt-3" style={{fontSize:"40px", fontWeight:"900"}}>Bridge Token Anytime</p>
+    <p className="text-center mt-3" style={{fontSize:"30px", fontWeight:"900"}}>Cross-Bridge Connection</p>
+    <img style={{backgroundColor:"red"}} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADfklEQVR4nO2bS4iNYRzGP6aEM8VC7KSkLCaX5H6bIvdyC5GFbGwolxUL2RDl0mAlJXIpchlipBSxY2FloawQSTIbMxbmp296j07T4Jz5vpn3+Zzntz7f8z7n+Z/3/77v13mTxBhjjDHGGGOMMcYYY4wx5j8HI4ULIoYLIoYLIkbVa0tf1yQ/ly2X3zhYjVyiDezn/oED6h3PkDr/4RTOMP/bcz0/aOLigojhgojhgojhgojhgojhgojhgojhgojhgojhgojhgohR+U6rBMwEzgA/+nHMTuB0GKuUiIFiDsAU4H0/mEg1JycFAaUcgKk5/0I6i1QMyRyAszkaaUkKCio5ALNyNDIjKSio5AA05mikMSkoKOWQl4uk4KCSg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDjJGIiOTg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDrGMAOuAo8CczF8iB91YOUQ3AowFWise7QJOASMyfo9MugOdQ1QjQAOwGLgQ/h3eG1+A4+kVgRq856Y7EDlUDjYUWANsAFYDC4BpwNK8jAAbgeaguwjYBBwEbgMfa9R6A1wG9gXfC/tZtz9ymA6sAA4Aj4AHwKS0GIOB5xkH6cjJbL3rvk4LMj6DwCtgLTAc2AN8ymio3nW/ldvVhxoe+gycB5YDg3q0vtTQNuAO8L1GM58j6JaCbquA7k9gd1lgAnACuA7cB54BL4HHwE3gJLA99NOGKtelUuiVO4FzwF3gaQF0dw2Q7gugDbgI7ADGVaNXzYCbw5Wv+bkIBoD1YfczN6lj3VoMjAvVrtzXtwAjrUvmHKotwhBgFXDlLzdTv4b717N79taIuleLoFs5wDBgZTiHLAPmhT65BNgCHA79Lh2kFt4BN4D9YUo3D5DukQLols8h+8M55GH3dem0ehnPIe3AvbBLyJP2OtR9Xd5h9fUQlO7MRoVZ1tRjTekrHXWs217uh9W+YugKsyndco7+Q/trCq3obQ1GrEv3zNpbDjGdJcfCOaSt4hyS9rZrwKGwiI2pcW2aCGwNb1VvAU+sSzmH8jnkUq7nEGOMMcYYY4wxxhhjjDHGmESbX4yduLxN7gGbAAAAAElFTkSuQmCC" alt="image" iscopyblocked="false"></img>
+    <div className="d-flex align-items-center mb-3">
+   
 
-      <div className="mainHeading">
-        {/* <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p> */}
-
-        {selectedChains[0]['name'] === 'Ethereum' ? 
-
-        <div style={{fontSize:"20px",  borderRadius:"20px"}}>
-          <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>
-            
-          {isBalanceZero ? 
-        '0' :
-        `${new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4) === 'NaN' ?'---': new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4)} ${symbol}`
-      }
-          </p> 
-        </div>
-        
-        :HoneyBalance === 'Loaded'? 
-        <div style={{fontSize:"20px",  borderRadius:"20px"}}>
-          <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>{`...`}</p>
-        </div>:<div style={{fontSize:"20px",  borderRadius:"20px"}}>
-          <p className="m-0">Balance</p>
-          <p style={{fontSize:"30px"}}>{`${walletContext.accounts[walletContext.accounts.length-1]?.address?HoneyBalance:'---'} HNY`}</p>
-        </div>
-        }
-
-        <div className="d-flex align-items-center mb-3">
         {selectedChains[0]['address'].length ? 
         <div style={{backgroundColor:"#2ef704", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>:
         <div style={{backgroundColor:"#fdff0f", width:"10px", height:"10px", borderRadius:"50%", marginRight:"10px"}}></div>
@@ -592,62 +568,89 @@ useEffect(() => {
             <p className="m-0">{selectedChains[0]['address'].length? shortenAddress(selectedChains[0]['address']): 'Not Connected'}</p>
           </a>
         </div>
+      <div className="mainHeading" style={{backgroundColor:"white", padding:"20px", borderRadius:"10px"}}>
+        {/* <p className="m-0" style={{fontSize:"22px", fontWeight:"900"}}>Transfer</p> */}
+
+        
         {
           selectedChains.map(item=>(
             <div className="content">
-            <div className="innerHeadingLeft" style={{backgroundColor:"#222938", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
-              <img src={item.logo} style={{width:"40px"}}></img>
-              <div>
-                <p className="m-0 froms">From</p>
-                <div className="d-flex drops dropdown" onClick={handleShow}>
-                  <p className="m-0">{item.name}</p>
-                  <img src={assets.images.arrow.default} style={{width:"20px"}}></img>
+            <div className="innerHeadingLeft" style={{backgroundColor:"#ececec", padding:"15px 15px", borderRadius:"10px 10px 0px 0px"}}>
+            <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>You Pay</h4>
+            </div>
+            <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#ececec",  padding:"0px 10px 0px 10px", borderRadius:"0px 0px 10px 10px"}}>
+              <input type="number" className="Inputs"  placeholder="Enter amount" onChange={handleAmountChange} value={amount}></input>          
+              
+              <div className="d--column-flex align-items-center" style={{ transform:"translate(0%,-20%)"}}>
+                
+              <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px"}}>
+                <img src={item.logo} style={{width:"35px", height:"35px"}}></img>
+              
+                <div className="d-flex drops">
+                  <p className="m-0" style={{fontSize:"22px"}}>{item.name === 'Honey'? 'HNY':"ETH"}</p>
                 </div>
               </div>
-            </div>
-            <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
-              <input type="number" className="Inputs"  placeholder="0" onChange={handleAmountChange} value={amount}></input>          
-              <div className="d-flex align-items-center">
-                <img src={assets.images.polkadot.default} style={{width:"24px", marginRight:"10px"}}></img>
-                <p className="m-0">HONEY</p>
+        {selectedChains[0]['name'] === 'Ethereum' ? 
+
+<div style={{fontSize:"20px",  borderRadius:"20px"}}>
+  {/* <p className="m-0">Balance</p> */}
+  <p style={{fontSize:"18px", marginTop:"10px"}}>
+    
+  {isBalanceZero ? 
+'0' :
+`${new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4) === 'NaN' ?'---': new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4)} ${symbol? symbol: 'HNY'}`
+}
+  </p> 
+</div>
+
+:HoneyBalance === 'Loaded'? 
+<div style={{fontSize:"18px",  borderRadius:"20px"}}>
+  <p style={{fontSize:"18px"}}>{`--- HNY`}</p>
+</div>:<div style={{fontSize:"18px",  borderRadius:"20px"}}>
+  <p style={{fontSize:"18px", marginTop:"10px"}}>{`${walletContext.accounts[walletContext.accounts.length-1]?.address?HoneyBalance:'---'} HNY`}</p>
+</div>
+}
+                
+                {/* <img src={assets.images.polkadot} style={{width:"24px", marginRight:"10px"}}></img>
+                <p className="m-0">HONEY</p> */}
               </div>
             </div>
             </div>
           ))
         }
-        <img className="chnage" src={assets.images.downarrow.default} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
+        <img className="chnage" src={assets.images.downarrow} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
         <div className="content">
-        <div className="innerHeadingLeft" style={{backgroundColor:"#222938", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
-          <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img>
+        <div className="innerHeadingLeft" style={{backgroundColor:"#ececec", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
+          {/* <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img> */}
           <div>
-            <p className="m-0 froms">To</p>
-            <div className="d-flex drops">
-              <p className="m-0">{nonSelectedChains[0].name}</p>
-              {/* <img src={assets.images.arrow} style={{width:"20px"}}></img> */}
-            </div>
+          <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>You Receive</h4>
           </div>
         </div>
-        <div className="innerHeadingLeft d-block" style={{backgroundColor:"#222938",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
-        <input type="text" className="Inputs w-100 addressInput" placeholder="Address" value={addresss} onChange={handleAddressChange}></input>
+        <div className="innerHeadingLeft d-block" style={{backgroundColor:"#ececec",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
         <div className=" d-flex justify-content-between">
-        <input type="number" className="Inputs" placeholder="0"  value={amount} disabled></input>          
-          <div className="d-flex align-items-center">
-            <img src={assets.images.polkadot.default} style={{width:"24px", marginRight:"10px"}}></img>
-            <p className="m-0">HONEY</p>
-          </div>
+        <input type="number" className="Inputs" placeholder="Enter amount"  value={amount} disabled></input>
+        <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px", transform:"translate(0%,-50%)"}}>
+                <img src={nonSelectedChains[0].logo}  style={{width:"35px", height:"35px"}}></img>
+              
+                <div className="d-flex drops">
+                  <p className="m-0" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HNY':"ETH"}</p>
+                </div>
+              </div>
         </div>
         </div>
         </div>
+        <input type="text" className="InputsAddress w-100 addressInput p-2 py-3" placeholder="Enter honey address" value={addresss} onChange={handleAddressChange}></input>
+
 {
   selectedChains[0]['name'] === 'Honey' ?
   !walletContext.accounts[walletContext.accounts.length-1]?.address ?
-<button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px",color:"white", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
+<button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px",color:"white", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
 :
-<button  style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
+<button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
 }
 
       {
-          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button disabled={inpro ===1? true: false} style={{backgroundColor:"#5f894d", width:"100%", borderRight:"2px solid #5f894d", borderBottom:"4px solid #5f894d", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>{inpro ===1? 'Progress...':'Transfer'}</button>
+          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button disabled={inpro ===1? true: false} style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>{inpro ===1? 'Progress...':'Transfer'}</button>
         : 
 <ConnectButton.Custom>
   {({

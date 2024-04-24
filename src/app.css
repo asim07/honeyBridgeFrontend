@@ -9,14 +9,14 @@
     margin-top: 5px;
 }
 .dropdown:hover{
-    background-color: #2a354c !important;    
+    /* background-color: #2a354c !important;     */
     cursor: pointer;
 }
 .connectButton{
-    background-color:#5f894d;
+    background-color:#2673fa;
     width:100%; 
-    border-right:2px solid #5f894d; 
-    border-bottom:4px solid #5f894d; 
+    border-right:2px solid #2673fa; 
+    border-bottom:4px solid #2673fa; 
     padding:10px 0px;
     font-size:20px;
     border-radius:10px;
@@ -29,17 +29,31 @@ font-size: 25px !important;
 .addressInput{
 font-size: 18px !important;
 }
-.connectButtonAnother{
-    background-color:#5f894d;
-    width:100%;
-    height: 32px;
-    color: white;
+.connectButtonAnothers{
+    background-color:white;
+    color: #2673fa;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 0px;
-    border-right:2px solid #5f894d; 
-    border-bottom:2px solid #5f894d; 
+    border-right:2px solid #2673fa; 
+    border-bottom:2px solid #2673fa; 
+    padding:10px 14px;
+    font-size:14px;
+    border-radius:5px;
+    font-weight: 380;
+}
+.connectButtonAnother{
+    background-color:white;
+    width:100%;
+    height: 32px;
+    color: #2673fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    border-right:2px solid #2673fa; 
+    border-bottom:2px solid #2673fa; 
     padding:10px 14px;
     font-size:14px;
     border-radius:5px;
@@ -49,7 +63,7 @@ font-size: 18px !important;
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    border-bottom: 1px solid #2f3645 !important;
+    /* border-bottom: 1px solid #2f3645 !important; */
 }
 .froms{
     color: #a9acb4;
@@ -60,6 +74,21 @@ font-size: 18px !important;
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+.InputsAddress{
+    background-color: transparent;
+    height:60px;
+    width:60%;
+    margin: 20px 0px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    outline: 0;
+    /* border: 0; */
+    font-size: 30px;
+    color:white;        
+}
+.Inputs::placeholder{
+    font-size: 20px;
 }
 .Inputs{
     background-color: transparent;
