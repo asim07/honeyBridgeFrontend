@@ -75,6 +75,9 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+.InputsAddress::placeholder{
+    font-size: 15px !important;
+}
 .InputsAddress{
     background-color: transparent;
     height:60px;
@@ -85,7 +88,7 @@ input::-webkit-inner-spin-button {
     outline: 0;
     /* border: 0; */
     font-size: 30px;
-    color:white;        
+    color:black;        
 }
 .Inputs::placeholder{
     font-size: 20px;
@@ -97,33 +100,46 @@ input::-webkit-inner-spin-button {
     outline: 0;
     border: 0;
     font-size: 30px;
-    color:white;    
+    color:black;    
 }
 .drops{
     margin-left:10px !important;
 }
-@media only screen and (max-width: 1200px) and (min-width: 700px) {
+@media only screen and (max-width: 1200px) and (min-width: 1180px) {
     .mainContent{
-        margin:8% 32% !important
+        margin:2% 32% !important
+    }    
+}
+@media only screen and (max-width: 1180px) and (min-width: 700px) {
+    .mainContent{
+        margin:2% 20% !important
     }    
 }
 @media only screen and (max-width: 700px) and (min-width: 400px) {
     .mainContent{
-        margin:8% 25% !important
+        margin:2% 0% !important
     }
 }
-
+@media only screen and (max-width: 400px) and (min-width: 200px) {
+    .checkIntoHeading{
+        font-size: 20px !important;
+    }
+    .logoOfChain{
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .chainNames{
+        font-size: 15px !important;
+    }
+}
 
 
 @media only screen and (max-width: 400px) and (min-width: 100px) {
     .mainContent{
-        margin:8% 5% !important
+        margin:2% 5% !important
     }
 }
 @media only screen and (max-width: 700px) and (min-width: 200px) {
-    .mainContent{
-        margin:8% 25% !important
-    }
     .navbarResp{
         display: flex !important;
     }

@@ -552,10 +552,12 @@ useEffect(() => {
     
 
     <Tooltip id="my-tooltip" />
-    <div className="mainContent" style={{margin:"8% 38%", padding:"20px", borderRadius:"10px"}}>
+    <div className="mainContent" style={{margin:"2% 38%", padding:"20px", borderRadius:"10px"}}>
       {/* <p>{balance}</p> */}
-    <p className="text-center mt-3" style={{fontSize:"30px", fontWeight:"900"}}>Cross-Bridge Connection</p>
-    <img style={{backgroundColor:"red"}} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADfklEQVR4nO2bS4iNYRzGP6aEM8VC7KSkLCaX5H6bIvdyC5GFbGwolxUL2RDl0mAlJXIpchlipBSxY2FloawQSTIbMxbmp296j07T4Jz5vpn3+Zzntz7f8z7n+Z/3/77v13mTxBhjjDHGGGOMMcYYY4wx5j8HI4ULIoYLIoYLIkbVa0tf1yQ/ly2X3zhYjVyiDezn/oED6h3PkDr/4RTOMP/bcz0/aOLigojhgojhgojhgojhgojhgojhgojhgojhgojhgojhgohR+U6rBMwEzgA/+nHMTuB0GKuUiIFiDsAU4H0/mEg1JycFAaUcgKk5/0I6i1QMyRyAszkaaUkKCio5ALNyNDIjKSio5AA05mikMSkoKOWQl4uk4KCSg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDjJGIiOTg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDrGMAOuAo8CczF8iB91YOUQ3AowFWise7QJOASMyfo9MugOdQ1QjQAOwGLgQ/h3eG1+A4+kVgRq856Y7EDlUDjYUWANsAFYDC4BpwNK8jAAbgeaguwjYBBwEbgMfa9R6A1wG9gXfC/tZtz9ymA6sAA4Aj4AHwKS0GIOB5xkH6cjJbL3rvk4LMj6DwCtgLTAc2AN8ymio3nW/ldvVhxoe+gycB5YDg3q0vtTQNuAO8L1GM58j6JaCbquA7k9gd1lgAnACuA7cB54BL4HHwE3gJLA99NOGKtelUuiVO4FzwF3gaQF0dw2Q7gugDbgI7ADGVaNXzYCbw5Wv+bkIBoD1YfczN6lj3VoMjAvVrtzXtwAjrUvmHKotwhBgFXDlLzdTv4b717N79taIuleLoFs5wDBgZTiHLAPmhT65BNgCHA79Lh2kFt4BN4D9YUo3D5DukQLols8h+8M55GH3dem0ehnPIe3AvbBLyJP2OtR9Xd5h9fUQlO7MRoVZ1tRjTekrHXWs217uh9W+YugKsyndco7+Q/trCq3obQ1GrEv3zNpbDjGdJcfCOaSt4hyS9rZrwKGwiI2pcW2aCGwNb1VvAU+sSzmH8jnkUq7nEGOMMcYYY4wxxhhjjDHGmESbX4yduLxN7gGbAAAAAElFTkSuQmCC" alt="image" iscopyblocked="false"></img>
+    <div className="text-center">
+      <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADfklEQVR4nO2bS4iNYRzGP6aEM8VC7KSkLCaX5H6bIvdyC5GFbGwolxUL2RDl0mAlJXIpchlipBSxY2FloawQSTIbMxbmp296j07T4Jz5vpn3+Zzntz7f8z7n+Z/3/77v13mTxBhjjDHGGGOMMcYYY4wx5j8HI4ULIoYLIoYLIkbVa0tf1yQ/ly2X3zhYjVyiDezn/oED6h3PkDr/4RTOMP/bcz0/aOLigojhgojhgojhgojhgojhgojhgojhgojhgojhgojhgohR+U6rBMwEzgA/+nHMTuB0GKuUiIFiDsAU4H0/mEg1JycFAaUcgKk5/0I6i1QMyRyAszkaaUkKCio5ALNyNDIjKSio5AA05mikMSkoKOWQl4uk4KCSg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDjJGIiOTg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDrGMAOuAo8CczF8iB91YOUQ3AowFWise7QJOASMyfo9MugOdQ1QjQAOwGLgQ/h3eG1+A4+kVgRq856Y7EDlUDjYUWANsAFYDC4BpwNK8jAAbgeaguwjYBBwEbgMfa9R6A1wG9gXfC/tZtz9ymA6sAA4Aj4AHwKS0GIOB5xkH6cjJbL3rvk4LMj6DwCtgLTAc2AN8ymio3nW/ldvVhxoe+gycB5YDg3q0vtTQNuAO8L1GM58j6JaCbquA7k9gd1lgAnACuA7cB54BL4HHwE3gJLA99NOGKtelUuiVO4FzwF3gaQF0dw2Q7gugDbgI7ADGVaNXzYCbw5Wv+bkIBoD1YfczN6lj3VoMjAvVrtzXtwAjrUvmHKotwhBgFXDlLzdTv4b717N79taIuleLoFs5wDBgZTiHLAPmhT65BNgCHA79Lh2kFt4BN4D9YUo3D5DukQLols8h+8M55GH3dem0ehnPIe3AvbBLyJP2OtR9Xd5h9fUQlO7MRoVZ1tRjTekrHXWs217uh9W+YugKsyndco7+Q/trCq3obQ1GrEv3zNpbDjGdJcfCOaSt4hyS9rZrwKGwiI2pcW2aCGwNb1VvAU+sSzmH8jnkUq7nEGOMMcYYY4wxxhhjjDHGmESbX4yduLxN7gGbAAAAAElFTkSuQmCC" alt="image" iscopyblocked="false"></img>
+    </div>
+    <p className="text-center mt-3 checkIntoHeading" style={{fontSize:"30px", fontWeight:"900"}}>Cross-Bridge Connection</p>
     <div className="d-flex align-items-center mb-3">
    
 
@@ -584,10 +586,10 @@ useEffect(() => {
               <div className="d--column-flex align-items-center" style={{ transform:"translate(0%,-20%)"}}>
                 
               <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px"}}>
-                <img src={item.logo} style={{width:"35px", height:"35px"}}></img>
+                <img src={item.logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
               
                 <div className="d-flex drops">
-                  <p className="m-0" style={{fontSize:"22px"}}>{item.name === 'Honey'? 'HNY':"ETH"}</p>
+                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{item.name === 'Honey'? 'HNY':"ETH"}</p>
                 </div>
               </div>
         {selectedChains[0]['name'] === 'Ethereum' ? 
@@ -618,7 +620,7 @@ useEffect(() => {
             </div>
           ))
         }
-        <img className="chnage" src={assets.images.downarrow} style={{backgroundColor:"#222938", width:"45px", padding:"5px", borderRadius:"50%", border:"2px solid #141925", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
+        <img className="chnage" src={assets.images.downarrow} style={{backgroundColor:"#ececec", width:"45px", padding:"5px", borderRadius:"10px", border:"2px solid white", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
         <div className="content">
         <div className="innerHeadingLeft" style={{backgroundColor:"#ececec", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
           {/* <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img> */}
@@ -630,10 +632,10 @@ useEffect(() => {
         <div className=" d-flex justify-content-between">
         <input type="number" className="Inputs" placeholder="Enter amount"  value={amount} disabled></input>
         <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px", transform:"translate(0%,-50%)"}}>
-                <img src={nonSelectedChains[0].logo}  style={{width:"35px", height:"35px"}}></img>
+                <img src={nonSelectedChains[0].logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
               
                 <div className="d-flex drops">
-                  <p className="m-0" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HNY':"ETH"}</p>
+                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HNY':"ETH"}</p>
                 </div>
               </div>
         </div>
