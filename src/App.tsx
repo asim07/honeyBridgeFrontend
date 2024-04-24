@@ -774,4 +774,7 @@ useEffect(() => {
   );
 };
 
+// "dev": "react-scripts start",
+// "start": "webpack serve --mode development --config webpack.config.js --open",
+// "build": "webpack --mode production",
 export default App;

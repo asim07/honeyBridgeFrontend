@@ -52,8 +52,8 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "webpack serve --mode development --config webpack.config.js --open",
-    "build": "webpack --mode production",
+    "start": "node server.js",
+    "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@rainbow-me)/\"",
     "eject": "react-scripts eject"
   },
