@@ -8,6 +8,7 @@ import { isAddress } from 'web3-validator';
 import MyModal from './components/chainDropdown';
 import { BigNumber } from 'bignumber.js';
 import assets from "./assets";
+
 import Container from 'react-bootstrap/Container';
 import { Tooltip } from 'react-tooltip'
 import Nav from 'react-bootstrap/Nav';
