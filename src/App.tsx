@@ -45,6 +45,7 @@ const App = () => {
   const navigate = useNavigate();
   const [loaderButton, setloaderButton] = useState(false);
   const [clickedButton, setclickedButton] = useState(false);
+  const [clickedEthButton, setclickedEthTransfer] = useState(false);
   const [HoneyBalance, setHoneyBalance] = useState('Loaded');
   let api: ApiPromise;
   async function getBalanceHoney(address: string) {
@@ -91,8 +92,6 @@ const App = () => {
       console.log('HWW');
       toast("Address or amount cannot be empty");
     }else{
-      setclickedButton(true);
-      setloaderButton(true);
       const provider = new WsProvider('wss://www.devnests.com/blockchain/')
       api = await ApiPromise.create({ provider });
       console.log({api});
@@ -158,6 +157,7 @@ const App = () => {
     functionName: 'balanceOf',
     args: [address],
   });
+  console.log({checkEthBalance:balance});
   let [ethAddress, setEthAddress] = useState<number | string>(0); // Initialize with number or string type
   // Assuming balance and symbol are defined somewhere above in your code
   const balanceNumber = typeof balance === 'string' ? new BigNumber(balance as string) : new BigNumber(balance as number);
@@ -260,8 +260,8 @@ useEffect(() => {
     }
   };
   useEffect(() => {
-    if (isPending) {
-      setInprogress(0)
+    if (!isPending) {
+      setclickedEthTransfer(false);
     }
   }, [!isPending]);
   
@@ -279,6 +279,7 @@ useEffect(() => {
   }, [error]);
   useEffect(() => {
     if (isConfirmed) {
+      setclickedEthTransfer(false);
       showSuccessNotification();
       setNotificationsShown(true);
     }
@@ -307,13 +308,12 @@ useEffect(() => {
   let CustomIsPending = isPending || isConfirming
 
   const submit = (obj: any) => {
-    console.log({oqo:isValidAddressPolkadotAddress(obj.addresss)})
     if(!isValidAddressPolkadotAddress(obj.addresss)){
       toast('Invalid Address')
       return;
     }
     if(obj.amount.length && obj.addresss.length){
-      setInprogress(1);
+      setclickedEthTransfer(true);
       console.log(obj.amount , obj.addresss);
       writeContract({
         address: contractAddress,
@@ -555,7 +555,7 @@ useEffect(() => {
     <div className="mainContent" style={{margin:"2% 38%", padding:"20px", borderRadius:"10px"}}>
       {/* <p>{balance}</p> */}
     <div className="text-center">
-      <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADfklEQVR4nO2bS4iNYRzGP6aEM8VC7KSkLCaX5H6bIvdyC5GFbGwolxUL2RDl0mAlJXIpchlipBSxY2FloawQSTIbMxbmp296j07T4Jz5vpn3+Zzntz7f8z7n+Z/3/77v13mTxBhjjDHGGGOMMcYYY4wx5j8HI4ULIoYLIoYLIkbVa0tf1yQ/ly2X3zhYjVyiDezn/oED6h3PkDr/4RTOMP/bcz0/aOLigojhgojhgojhgojhgojhgojhgojhgojhgojhgojhgohR+U6rBMwEzgA/+nHMTuB0GKuUiIFiDsAU4H0/mEg1JycFAaUcgKk5/0I6i1QMyRyAszkaaUkKCio5ALNyNDIjKSio5AA05mikMSkoKOWQl4uk4KCSg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDjJGIiOTg4yRyMjkIGMkMjI5yBiJjEwOMkYiI5ODjJHIyOQgYyQyMjnIGImMTA4yRiIjk4OMkcjI5CBjJDIyOcgYiYxMDrGMAOuAo8CczF8iB91YOUQ3AowFWise7QJOASMyfo9MugOdQ1QjQAOwGLgQ/h3eG1+A4+kVgRq856Y7EDlUDjYUWANsAFYDC4BpwNK8jAAbgeaguwjYBBwEbgMfa9R6A1wG9gXfC/tZtz9ymA6sAA4Aj4AHwKS0GIOB5xkH6cjJbL3rvk4LMj6DwCtgLTAc2AN8ymio3nW/ldvVhxoe+gycB5YDg3q0vtTQNuAO8L1GM58j6JaCbquA7k9gd1lgAnACuA7cB54BL4HHwE3gJLA99NOGKtelUuiVO4FzwF3gaQF0dw2Q7gugDbgI7ADGVaNXzYCbw5Wv+bkIBoD1YfczN6lj3VoMjAvVrtzXtwAjrUvmHKotwhBgFXDlLzdTv4b717N79taIuleLoFs5wDBgZTiHLAPmhT65BNgCHA79Lh2kFt4BN4D9YUo3D5DukQLols8h+8M55GH3dem0ehnPIe3AvbBLyJP2OtR9Xd5h9fUQlO7MRoVZ1tRjTekrHXWs217uh9W+YugKsyndco7+Q/trCq3obQ1GrEv3zNpbDjGdJcfCOaSt4hyS9rZrwKGwiI2pcW2aCGwNb1VvAU+sSzmH8jnkUq7nEGOMMcYYY4wxxhhjjDHGmESbX4yduLxN7gGbAAAAAElFTkSuQmCC" alt="image" iscopyblocked="false"></img>
+      <img  src={assets.images.bridge} style={{width:"90px"}} alt="image"></img>
     </div>
     <p className="text-center mt-3 checkIntoHeading" style={{fontSize:"30px", fontWeight:"900"}}>Cross-Bridge Connection</p>
     <div className="d-flex align-items-center mb-3">
@@ -652,7 +652,14 @@ useEffect(() => {
 }
 
       {
-          selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button disabled={inpro ===1? true: false} style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>{inpro ===1? 'Progress...':'Transfer'}</button>
+        clickedEthButton?
+        <button style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}}>
+          <div className="spinner-border text-light" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </button>
+        :
+        selectedChains[0]['name'] === 'Ethereum' ? isConnected ? <button style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}} onClick={submit.bind(null,{amount,addresss})}>Transfer</button>
         : 
 <ConnectButton.Custom>
   {({

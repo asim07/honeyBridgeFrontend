@@ -6,6 +6,7 @@ const assets = {
     arrow: require("./images/down.png"),
     downarrow: require("./images/arr.png"),
     tick: require("./images/tick.png"),
+    bridge: require("./images/bridge.png"),
   }
 };
 
