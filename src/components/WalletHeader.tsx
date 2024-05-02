@@ -20,7 +20,7 @@ function WalletHeader ({ visible }: Props): React.ReactElement<Props> {
   const wallet = walletContext.wallet || walletContext.evmWallet;
   console.log({ahah:wallet})
   const navigate = useNavigate()
-  const disconnect = (wallet) => {
+  const disconnect = (wallet: any) => {
     localStorage.clear();
     console.log('localStorage cleared!');
     

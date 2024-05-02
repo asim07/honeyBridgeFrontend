@@ -2,10 +2,10 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import './chainDropdown.css';  // Import the CSS file
 
-const MyModal = (props) => {
-    const changeChain =(name)=>{
-        props.setChain((prev)=>{
-            let arrToSend = prev.map(item=>{
+const MyModal = (props: any) => {
+    const changeChain =(name: any)=>{
+        props.setChain((prev: any)=>{
+            let arrToSend = prev.map((item: any)=>{
                 if(item.name === name){
                     item.selected = true;
                 }else{
@@ -23,7 +23,7 @@ const MyModal = (props) => {
         <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{props.content.map(item=>(
+        <p>{props.content.map((item: any)=>(
             <div className={`d-flex align-items-center unders justify-content-between ${item.selected? 'selected':"nonselected"} mt-1`} style={{ padding:"10px 10px"}} onClick={changeChain.bind(null, item.name)}>
                 <div className={`d-flex align-items-center`}>
                     <img src={item.logo} style={{width:"30px", height:'30px',marginRight:"10px"}}></img>

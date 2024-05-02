@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "resolveJsonModule": true,
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
@@ -8,32 +9,14 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "jsx": "react-jsx",  // <-- Add this line
-    "types": ["@types/node", "@types/polkadot__extension-inject", "@types/subwallet__wallet-connect"]
+    "jsx": "react-jsx",
+    "types": ["@types/node","webpack-env"]
+    // "types": ["@types/node", "@types/polkadot__extension-inject", "@types/subwallet__wallet-connect"]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
   ]
 }
-
-// {
-//   "compilerOptions": {
-//     "target": "es5",
-//     "lib": ["dom", "dom.iterable", "esnext"],
-//     "allowJs": true,
-//     "skipLibCheck": true,
-//     "esModuleInterop": true,
-//     "allowSyntheticDefaultImports": true,
-//     "strict": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "module": "esnext",
-//     "moduleResolution": "node",
-//     "resolveJsonModule": true,
-//     "jsx": "react-jsx"
-//   },
-//   "include": ["src/**/*.ts", "src/**/*.tsx"],
-//   "exclude": ["node_modules"]
-// }

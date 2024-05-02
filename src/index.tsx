@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@rainbow-me/rainbowkit/styles.css';
 import './index.css';  // Your global styles
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,7 +15,7 @@ import App from './App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WalletContextProvider } from '../src/providers/WalletContextProvider';
 import WalletInfo from './pages/WalletInfo';
-import '@rainbow-me/rainbowkit/styles.css';
+
 
 const config = getDefaultConfig({
   appName: 'Honey Protocol',
@@ -24,13 +25,11 @@ const config = getDefaultConfig({
   ],
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = document.getElementById('root') as HTMLElement;
 
 const queryClient = new QueryClient();
 
-root.render(
+ReactDOM.render(
   <WalletContextProvider>
     <React.StrictMode>
       <WagmiProvider config={config}>
@@ -57,7 +56,9 @@ root.render(
         </QueryClientProvider>
       </WagmiProvider>
     </React.StrictMode>
-  </WalletContextProvider>
+  </WalletContextProvider>,
+  root
 );
+
 
 reportWebVitals();

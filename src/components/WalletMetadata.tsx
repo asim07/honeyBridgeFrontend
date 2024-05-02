@@ -62,7 +62,7 @@ function WalletMetadata (): React.ReactElement {
           })
           .catch((error) => {
             console.error(error);
-            message.warn({ content: 'Add Metadata Failed or Cancelled!', key });
+            message.warning({ content: 'Add Metadata Failed or Cancelled!', key });
           });
       }
     },

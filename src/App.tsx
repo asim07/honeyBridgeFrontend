@@ -19,7 +19,6 @@ import  abi from './utils/abi.json'
 import { Box, Avatar, Drawer, List, Stack, Toolbar } from "@mui/material";
 import sizeConfigs from "./configs/sizeConfigs";
 import Sidebar from "./common/Sidebar";
-import Topbar from "./common/Topbar";
 import './app.css';
 import { ethers } from 'ethers';
 import ParentComponent from './components/ParentComponent';
@@ -46,7 +45,7 @@ const App = () => {
   const [loaderButton, setloaderButton] = useState(false);
   const [clickedButton, setclickedButton] = useState(false);
   const [clickedEthButton, setclickedEthTransfer] = useState(false);
-  const [HoneyBalance, setHoneyBalance] = useState('Loaded');
+  const [HoneyBalance, setHoneyBalance] = useState<any>('Loaded');
   let api: ApiPromise;
   async function getBalanceHoney(address: string) {
     try{
@@ -79,7 +78,7 @@ const App = () => {
       console.log({err});
     }
   }
-  const sendTransaction = async(data)=>{
+  const sendTransaction = async(data: any)=>{
 
     if(isAddress(addresss)){
 
@@ -116,7 +115,7 @@ const App = () => {
                  // Close the toast after a delay (e.g., 5 seconds)
                 toast.dismiss(toastId);
                 toast('Transaction Finalized...');
-                setHoneyBalance((prev=> prev - amount));
+                setHoneyBalance((prev: number) => prev - Number(amount));
                 setclickedButton(false);
                 setloaderButton(false);
               }
@@ -128,7 +127,7 @@ const App = () => {
   });
   }
 }
-  async function connectToChain(provider) {
+  async function connectToChain(provider: any) {
     // console.log('INNER')
     // try{
     //   const provider = new WsProvider('wss://www.devnests.com/blockchain/')
@@ -155,7 +154,7 @@ const App = () => {
     address: contractAddress,
     abi,
     functionName: 'balanceOf',
-    args: [address],
+    args: [address || ""],
   });
   console.log({checkEthBalance:balance});
   let [ethAddress, setEthAddress] = useState<number | string>(0); // Initialize with number or string type
@@ -178,7 +177,7 @@ useEffect(() => {
   // const { data, isError, isLoading } = useBalance({
   //   address: address,
   // })
-  const setAddressToChain = (address,chainName) => {
+  const setAddressToChain = (address: any,chainName: any) => {
     console.log("HIIIIII", chainName, address);
     console.log({chains});
     setChain(() => {
@@ -245,7 +244,7 @@ useEffect(() => {
   };
   console.log({isConfirming, isConfirmed})
   const [notificationsShown, setNotificationsShown] = useState(false);
-  const isValidAddressPolkadotAddress = (address) => {
+  const isValidAddressPolkadotAddress = (address: any) => {
     try {
       console.log({address});
       encodeAddress(
@@ -288,7 +287,7 @@ useEffect(() => {
   const showErrorNotification  = (error: any) => {
     toast(error);
   };
-  let toastId;
+  let toastId: any;
   let [inpro, setInprogress]= useState<number | string>(0);
   const showConfirmationNotification = () => {
     setInprogress(1);
@@ -374,7 +373,7 @@ useEffect(() => {
       getBalanceHoney(walletContext.accounts[walletContext.accounts.length-1]?.address).then((balancee)=>  setHoneyBalance(Number(balancee)));
     }
   }, [walletContext.accounts[walletContext.accounts.length-1]?.address]);
-  const shortenAddress = (address) => {
+  const shortenAddress = (address: any) => {
     if (address.length <= 10) return address; // Return full address if it's already short
   
     const firstPart = address.substring(0, 8);
@@ -541,7 +540,7 @@ useEffect(() => {
         selectedChains[0]['name'] === 'Honey' && walletContext.wallet &&             <Button
         style={{marginLeft:"20px"}}
         className='sub-wallet-btn sub-wallet-btn-small-size connectButtonAnothers'
-        onClick={disconnect.bind(null, {})}
+        onClick={disconnect}
         type={'primary'}
       >DIsconnect</Button>
       }

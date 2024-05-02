@@ -24,7 +24,7 @@ function WalletInfo (): React.ReactElement {
   const [clickedButton, setclickedButton] = useState(false);
   const [amount, setAmount] = useState('');
   let api: ApiPromise;
-  const sendTransaction = async(data)=>{
+  const sendTransaction = async(data: any)=>{
 
 
     console.log(!amount.length || !address.length);
@@ -69,7 +69,7 @@ function WalletInfo (): React.ReactElement {
   });
   }
 }
-  async function connectToChain(provider) {
+  async function connectToChain(provider: any) {
     // console.log('INNER')
     // try{
     //   const provider = new WsProvider('wss://www.devnests.com/blockchain/')
@@ -81,11 +81,11 @@ function WalletInfo (): React.ReactElement {
   }
 
 
-  const handleAddressChange = (event) => {
+  const handleAddressChange = (event: any) => {
       setAddress(event.target.value);
   };
 
-  const handleAmountChange = (event) => {
+  const handleAmountChange = (event: any) => {
       setAmount(event.target.value);
   };
   useEffect(() => {

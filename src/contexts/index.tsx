@@ -9,7 +9,7 @@ export interface WalletContextInterface {
   wallet?: Wallet,
   evmWallet?: EvmWallet,
   accounts: WalletAccount[],
-  setWallet: (wallet: Wallet | EvmWallet | undefined, walletType: 'substrate'|'evm',reset: Boolean) => void
+  setWallet: (wallet: Wallet | EvmWallet | undefined, walletType: 'substrate'|'evm',reset?: Boolean) => void
   walletType: 'substrate'|'evm';
   setAccounts?: () => void,
   setWalletType?: () => void,

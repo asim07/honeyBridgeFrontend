@@ -21,7 +21,7 @@ function SelectWalletModal ({ theme }: Props): React.ReactElement<Props> {
   const walletContext = useContext(WalletContext);
   const navigate = useNavigate();
   const onSelectWallet = useCallback(
-    (walletKey, walletType: 'substrate' | 'evm' = 'substrate') => {
+    (walletKey: any, walletType: 'substrate' | 'evm' = 'substrate') => {
       if (walletType === 'substrate') {
         walletContext.setWallet(getWalletBySource(walletKey), walletType);
         openSelectWalletContext.close();

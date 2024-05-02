@@ -22,7 +22,7 @@ function AccountList (): React.ReactElement {
           message.success({ content: 'Sign Successfully!', key });
         }).catch((error) => {
           console.error(error);
-          message.warn({ content: 'Sign Failed or Cancelled!', key });
+          message.warning({ content: 'Sign Failed or Cancelled!', key });
         });
       }
     },
