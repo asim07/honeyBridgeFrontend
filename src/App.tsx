@@ -588,7 +588,7 @@ useEffect(() => {
                 <img src={item.logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
               
                 <div className="d-flex drops">
-                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{item.name === 'Honey'? 'HNY':"ETH"}</p>
+                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{item.name === 'Honey'? 'HIVVE':"ETH"}</p>
                 </div>
               </div>
         {selectedChains[0]['name'] === 'Ethereum' ? 
@@ -599,16 +599,16 @@ useEffect(() => {
     
   {isBalanceZero ? 
 '0' :
-`${new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4) === 'NaN' ?'---': new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4)} ${symbol? symbol: 'HNY'}`
+`${new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4) === 'NaN' ?'---': new BigNumber(ethAddress as string).dividedBy(1e12).toFixed(4)} ${symbol? 'HIVVE': 'HIVVE'}`
 }
   </p> 
 </div>
 
 :HoneyBalance === 'Loaded'? 
 <div style={{fontSize:"18px",  borderRadius:"20px"}}>
-  <p style={{fontSize:"18px"}}>{`--- HNY`}</p>
+  <p style={{fontSize:"18px"}}>{`--- HIVVE`}</p>
 </div>:<div style={{fontSize:"18px",  borderRadius:"20px"}}>
-  <p style={{fontSize:"18px", marginTop:"10px"}}>{`${walletContext.accounts[walletContext.accounts.length-1]?.address?HoneyBalance:'---'} HNY`}</p>
+  <p style={{fontSize:"18px", marginTop:"10px"}}>{`${walletContext.accounts[walletContext.accounts.length-1]?.address?HoneyBalance:'---'} HIVVE`}</p>
 </div>
 }
                 
@@ -634,7 +634,7 @@ useEffect(() => {
                 <img src={nonSelectedChains[0].logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
               
                 <div className="d-flex drops">
-                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HNY':"ETH"}</p>
+                  <p className="m-0 chainNames" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HIVVE':"ETH"}</p>
                 </div>
               </div>
         </div>
