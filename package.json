@@ -54,8 +54,8 @@
     "web3-validator": "^2.0.5"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "node server.js",
+    "dev": "react-scripts start --port 5000",
+    "start": "react-scripts start --port 5000",
     "buildPro": "webpack --config webpack/webpack.config.js --env env=prod",
     "buildDev": "webpack serve --config webpack/webpack.config.js --env env=dev",
     "build": "react-scripts build",
