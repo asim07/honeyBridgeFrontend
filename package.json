@@ -57,7 +57,7 @@
     "dev": "react-scripts start",
     "start": "node server.js",
     "buildPro": "webpack --config webpack/webpack.config.js --env env=prod",
-    "buildDev": "webpack serve --config webpack/webpack.config.js --env env=dev --port=5000",
+    "buildDev": "webpack serve --config webpack/webpack.config.js --env env=dev",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@rainbow-me)/\"",
     "eject": "react-scripts eject"

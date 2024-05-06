@@ -18,8 +18,23 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.css$/i,
+        exclude: /\.lazy\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.lazy\.css$/i,
+        use: [
+          {
+            loader: "style-loader",
+            options: { injectType: "lazySingletonStyleTag" },
+          },
+          {
+            loader: "css-loader",
+            // Uncomment it if you want to use CSS modules
+            // options: { modules: true }
+          },
+        ],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
