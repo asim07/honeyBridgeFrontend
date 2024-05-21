@@ -1,21 +1,17 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20
+# Use the official Node.js 16 image as a parent image
+FROM node:18
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to work directory
-COPY package*.json ./
-
-# Install all dependencies
-RUN yarn install
-
-# Copy the local source files to the container
+# Copy the current directory contents into the container at /app
 COPY . .
 
-# Build the React application
-RUN yarn run build
+# Install Yarn and project dependencies
+RUN yarn install
 
-# The CMD here can be adjusted based on how you choose to serve the build files,
-# for now, we'll just list the build directory as the last step
-CMD ["ls", "-l", "/app/build"]
+# Make port 3001 available to the world outside this container
+EXPOSE 5000
+
+# Run the app when the container launches
+CMD ["yarn", "start"]
