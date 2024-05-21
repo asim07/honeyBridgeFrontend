@@ -115,6 +115,7 @@ input::-webkit-inner-spin-button {
     .mainContent{
         margin:2% 32% !important
     }    
+    
 }
 @media only screen and (max-width: 1500px) and (min-width: 1200px) {
     .mainContent{
