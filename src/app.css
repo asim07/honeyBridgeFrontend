@@ -105,9 +105,24 @@ input::-webkit-inner-spin-button {
 .drops{
     margin-left:10px !important;
 }
-@media only screen and (max-width: 1200px) and (min-width: 1180px) {
+@media only screen and (max-width: 2000px) and (min-width: 1700px) {
+    .mainContent{
+        margin:2% 35% !important
+    }    
+}
+@media only screen and (max-width: 1700px) and (min-width: 1500px) {
     .mainContent{
         margin:2% 32% !important
+    }    
+}
+@media only screen and (max-width: 1500px) and (min-width: 1200px) {
+    .mainContent{
+        margin:2% 30% !important
+    }    
+}
+@media only screen and (max-width: 1200px) and (min-width: 1180px) {
+    .mainContent{
+        margin:2% 12% !important
     }    
 }
 @media only screen and (max-width: 1180px) and (min-width: 700px) {
