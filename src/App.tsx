@@ -86,6 +86,7 @@ const App = () => {
       toast('Invalid Address')
       return;
     }
+    setloaderButton(true);
     console.log(amount , addresss);
     if(!amount.length || !addresss.length){
       console.log('HWW');
@@ -104,16 +105,19 @@ const App = () => {
         } else {
               let toastId;
               if(status.type === 'Ready'){
-                toast('Ready');
-              }
-              if(status.type === 'Broadcast'){
                 toastId = toast("Transaction is in progress", {
                   autoClose: false,
                 });
+                setloaderButton(true)
+              }
+              if(status.type === 'Broadcast'){
+                setloaderButton(true)
               }
               if(status.type === 'Finalized'){
                  // Close the toast after a delay (e.g., 5 seconds)
                 toast.dismiss(toastId);
+                setAmount('');
+                setAddress('');
                 toast('Transaction Finalized...');
                 setHoneyBalance((prev: number) => prev - Number(amount));
                 setclickedButton(false);
@@ -123,6 +127,7 @@ const App = () => {
         }
    
   }).catch((error: any) => {
+      setloaderButton(false);
       console.log(':( transaction failed', error);
   });
   }
@@ -577,14 +582,14 @@ useEffect(() => {
           selectedChains.map(item=>(
             <div className="content">
             <div className="innerHeadingLeft" style={{backgroundColor:"#ececec", padding:"15px 15px", borderRadius:"10px 10px 0px 0px"}}>
-            <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>You Pay</h4>
+              <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>Pay</h4>
             </div>
             <div className="innerHeadingLeft d-flex justify-content-between" style={{backgroundColor:"#ececec",  padding:"0px 10px 0px 10px", borderRadius:"0px 0px 10px 10px"}}>
-              <input type="number" className="Inputs"  placeholder="Enter amount" onChange={handleAmountChange} value={amount}></input>          
+              <input type="number" className="Inputs"  placeholder="Enter amount" onChange={handleAmountChange} value={amount}></input>
               
               <div className="d--column-flex align-items-center" style={{ transform:"translate(0%,-20%)"}}>
-                
-              <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px"}}>
+              
+              <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", width:"160px", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px"}}>
                 <img src={item.logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
               
                 <div className="d-flex drops">
@@ -624,15 +629,14 @@ useEffect(() => {
         <div className="innerHeadingLeft" style={{backgroundColor:"#ececec", padding:"15px 10px", borderRadius:"10px 10px 0px 0px"}}>
           {/* <img src={nonSelectedChains[0].logo} style={{width:"40px"}}></img> */}
           <div>
-          <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>You Receive</h4>
+          <h4 style={{fontWeight:"370", letterSpacing:"1px"}}>Receive</h4>
           </div>
         </div>
         <div className="innerHeadingLeft d-block" style={{backgroundColor:"#ececec",  padding:"15px 10px 20px 10px", borderRadius:"0px 0px 10px 10px"}}>
         <div className=" d-flex justify-content-between">
-        <input type="number" className="Inputs" placeholder="Enter amount"  value={amount} disabled></input>
-        <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px", transform:"translate(0%,-50%)"}}>
-                <img src={nonSelectedChains[0].logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>
-              
+        <input type="number" className="Inputs" placeholder="--"  value={amount} disabled></input>
+        <div className="d-flex dropdown" onClick={handleShow} style={{backgroundColor:"white",width:"160px", color:"black", padding:"10px 30px 10px 20px", borderRadius:"15px", transform:"translate(0%,-50%)"}}>
+                <img src={nonSelectedChains[0].logo} className="logoOfChain" style={{width:"35px", height:"35px"}}></img>              
                 <div className="d-flex drops">
                   <p className="m-0 chainNames" style={{fontSize:"22px"}}>{nonSelectedChains[0].name === 'Honey'? 'HIVVE':"ETH"}</p>
                 </div>
@@ -647,7 +651,12 @@ useEffect(() => {
   !walletContext.accounts[walletContext.accounts.length-1]?.address ?
 <button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px",color:"white", borderRadius:"10px"}}       onClick={selectWallet.open}>Connect Wallet</button>
 :
-<button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 0px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>:''
+loaderButton ?
+<button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 10px",paddingTop:"15px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}><div className="spinner-border text-light" role="status">
+<span className="sr-only"></span>
+</div></button>:
+<button  style={{backgroundColor:"#2673fa", width:"100%", borderRight:"2px solid #2673fa", borderBottom:"4px solid #2673fa", padding:"10px 10px",paddingTop:"15px", fontSize:"20px", color:"White", borderRadius:"10px"}}  onClick={sendTransaction.bind(null, {address:walletContext.accounts[walletContext.accounts.length-1]?.address, signer:walletContext.wallet?.signer})}>Transfer</button>
+:''
 }
 
       {
