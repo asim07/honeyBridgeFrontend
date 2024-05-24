@@ -229,6 +229,7 @@ useEffect(() => {
     writeContract 
   } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+
   useWaitForTransactionReceipt({ 
     hash, 
   })
@@ -275,6 +276,13 @@ useEffect(() => {
       setNotificationsShown(true);
     }
   }, [isConfirming]);
+  useEffect(()=>{
+    if(!isConfirmed && isConfirming){
+      setclickedEthTransfer(true);
+    }else{
+      setclickedEthTransfer(false);
+    }
+  },[isConfirmed,isConfirming])
   useEffect(() => {
     if (error) {
       showErrorNotification(error);
