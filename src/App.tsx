@@ -564,12 +564,89 @@ useEffect(() => {
     
 
     <Tooltip id="my-tooltip" />
-    <div className="mainContent" style={{margin:"2% 38%", padding:"20px", borderRadius:"10px"}}>
+    <div className="mainContent" style={{margin:"2% 38%", padding:"20px", borderRadius:"20px", border:"1px solid #00afd3"}}>
       {/* <p>{balance}</p> */}
-    <div className="text-center">
-      <img  src={assets.images.bridge} style={{width:"90px"}} alt="image"></img>
-    </div>
     <p className="text-center mt-3 checkIntoHeading" style={{fontSize:"30px", fontWeight:"900"}}>Cross-Bridge Connection</p>
+    {/* <div style={{'backgroundColor':"#2e6b74", "width":"100%", "height":"2px"}}>
+    </div> */}
+    
+    
+    
+     <div className="not-connected-container">
+      <div className="line"></div>
+      <div className="status">
+        <span className="dot"></span>
+        Not Connected
+      </div>
+      <div className="line"></div>
+    </div>
+
+
+
+    <div className="header-container">
+      <div className="left-section">
+        <div>
+
+        </div>
+        <img src={assets.images.HivveMenu} alt="HIVVE Logo" className="logo" />
+        <span className="dropdown">
+          HIVVE
+        </span>
+        <img src={assets.images.ChevronDown} style={{width:"14px", height:"14px"}} alt="HIVVE Logo" className="logo" />
+      </div>
+      <div className="right-section">
+        Balance: <span className="balance">0</span>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div>
+    <div className="container-1">
+      <div className="from-section-1">
+        <span className="from-text-1">From:</span>
+        <div className="left-section-1">
+      <img src={assets.images.HivveMenu} alt="HIVVE Logo" className="logo" />
+        <span className="dropdown">
+          HIVVE
+        </span>
+        <img src={assets.images.ChevronDown} style={{width:"14px", height:"14px"}} alt="HIVVE Logo" className="logo" />
+      </div>
+      </div>
+      <div className="input-section-1">
+        <input type="text" placeholder="You Pay" className="input-field-1" />
+      </div>
+    </div>
+    <img className="chnage" src={assets.images.Swap} style={{backgroundColor:"#000000", width:"50px", height:"50px", padding:"5px", borderRadius:"50%", border:"1px solid #28AED5", position:"absolute", left:"50%", transform:"translate(-50%, -50%)"}} onClick={opposie}></img>
+    <div className="container-1 mt-3">
+      <div className="from-section-1">
+        <span className="from-text-1">To:</span>
+        <div className="left-section-1">
+      <img src={assets.images.eth} alt="HIVVE Logo" className="logo" />
+        <span className="dropdown">
+          ETH
+        </span>
+        <img src={assets.images.ChevronDown} style={{width:"14px", height:"14px"}} alt="HIVVE Logo" className="logo" />
+      </div>
+      </div>
+      <div className="input-section-1">
+        <input type="text" placeholder="You Pay" className="input-field-1" />
+      </div>
+    </div>
+    </div>
+
+
+
+    <input type="text" className="InputsAddress-1 w-100 addressInput-1 p-2 py-3" placeholder="Enter Your Address" value={addresss} onChange={handleAddressChange}></input>
+
+
+
+
+
     <div className="d-flex align-items-center mb-3">
    
 

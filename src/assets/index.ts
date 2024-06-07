@@ -7,6 +7,9 @@ const assets = {
     downarrow: require("./images/arr.png"),
     tick: require("./images/tick.png"),
     bridge: require("./images/bridge.png"),
+    ChevronDown: require("./images/ChevronDown.png"),
+    HivveMenu: require("./images/HIVVEMENU.png"),
+    Swap: require("./images/Swap.png")
   }
 };
 

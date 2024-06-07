@@ -2,6 +2,117 @@
     margin-left: 25%;    
     width: 70%;
 }
+
+/* Header.css */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    width: 172px;
+  }
+  
+  .logo {
+    height: 30px; /* Adjust the size of the logo as needed */
+    margin-right: 10px;
+  }
+  
+  .dropdown {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Text color */
+    font-size: 16px; /* Adjust font size as needed */
+  }
+  
+  .arrow {
+    margin-left: 5px;
+  }
+  
+  .right-section {
+    color: #2e6b74; /* Text color to match the design */
+    font-size: 20px; /* Adjust font size as needed */
+  }
+  
+  .balance {
+    color: #00aaff; /* Color for the balance value */
+  }
+  
+.header-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .left-section {
+    display: flex;
+    align-items: center;
+    background-color: rgba(40, 174, 213, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px; /* Rounded corners */
+  }
+  .left-section-1 {
+    display: flex;
+    align-items: center;
+    background-color: #011217;
+    padding: 5px 10px;
+    border-radius: 5px; /* Rounded corners */
+  }
+  .logo {
+    height: 30px; /* Adjust the size of the logo as needed */
+    margin-right: 10px;
+  }
+  
+  .dropdown {
+    display: flex;
+    align-items: center;
+    color: white; /* Text color */
+    font-size: 16px; /* Adjust font size as needed */
+  }
+  
+  .arrow {
+    margin-left: 5px;
+    font-size: 12px; /* Adjust arrow size as needed */
+  }
+  
+/* NotConnected.css */
+.not-connected-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+  
+  .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #28AED5; /* Line color to match the design */
+  }
+  
+  .status {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    color: white; /* Text color */
+    font-size: 16px; /* Adjust font size as needed */
+  }
+  
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: #fc466b; /* Red dot color */
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
 .itemsss{
     font-size: 7px;
 }
@@ -85,6 +196,23 @@ input::-webkit-inner-spin-button {
     margin: 20px 0px;
     border: 1px solid gray;
     border-radius: 10px;
+    outline: 0;
+    /* border: 0; */
+    font-size: 30px;
+    color:black;        
+}
+.InputsAddress-1::placeholder{
+    font-size: 15px !important;
+    color: #28AED5;
+}
+.InputsAddress-1{
+    background-color: transparent;
+    height:60px;
+    width:60%;
+    margin: 20px 0px;
+    border: 0;
+    border-bottom: 1px solid #28AED5;
+    /* border-radius: 10px; */
     outline: 0;
     /* border: 0; */
     font-size: 30px;
@@ -202,3 +330,88 @@ input::-webkit-inner-spin-button {
         font-size: 5px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container-1 {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #000; /* Assuming the background is black */
+    padding: 10px 10px 0px 10px;
+    height: 140px;
+    border-radius: 8px;
+    width: 95%; /* Adjust as necessary */
+  }
+  
+  .from-section-1 {
+    display: flex;
+    font-size: 17px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .from-text-1 {
+    color: white;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  
+  .dropdown-1 {
+    display: flex;
+    align-items: center;
+    background-color: #222; /* Dark background for dropdown */
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .icon-1 {
+    width: 20px; /* Adjust size as necessary */
+    height: 20px; /* Adjust size as necessary */
+    margin-right: 5px;
+  }
+  
+  .dropdown-text-1 {
+    color: white;
+    font-size: 16px;
+  }
+  
+  .dropdown-arrow-1 {
+    color: white;
+    margin-left: auto;
+  }
+  
+  .input-section-1 {
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  .input-field-1 {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    border: 1px dashed #28AED5; /* Dashed border with 20% opacity color */
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+  }
+  
